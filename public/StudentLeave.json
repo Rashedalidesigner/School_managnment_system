@@ -1,0 +1,45 @@
+[
+    {
+        "studentId": "S001",
+        "leaveStatus": "Approved",
+        "reason": "Fever",
+        "date": "2026-03-10",
+        "duration": "2 days"
+    },
+    {
+        "studentId": "S002",
+        "leaves": [
+            {
+                "date": "2026-03-07",
+                "type": "Sick"
+            }
+        ]
+    },
+    {
+        "studentId": "S003",
+        "leaves": [
+            {
+                "date": "2026-03-09",
+                "type": "Casual"
+            }
+        ]
+    },
+    {
+        "studentId": "S004",
+        "leaves": [
+            {
+                "date": "2026-03-08",
+                "type": "Sick"
+            }
+        ]
+    },
+    {
+        "studentId": "S005",
+        "leaves": [
+            {
+                "date": "2026-03-06",
+                "type": "Casual"
+            }
+        ]
+    }
+]

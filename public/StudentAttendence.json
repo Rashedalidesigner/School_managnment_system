@@ -1,0 +1,152 @@
+[
+    {
+        "studentId": "S001",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S002",
+        "date": "2026-03-01",
+        "status": "Absent"
+    },
+    {
+        "studentId": "S003",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S004",
+        "date": "2026-03-01",
+        "status": "Late"
+    },
+    {
+        "studentId": "S005",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S006",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S007",
+        "date": "2026-03-01",
+        "status": "Absent"
+    },
+    {
+        "studentId": "S008",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S009",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S010",
+        "date": "2026-03-01",
+        "status": "Late"
+    },
+    {
+        "studentId": "S011",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S012",
+        "date": "2026-03-01",
+        "status": "Absent"
+    },
+    {
+        "studentId": "S013",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S014",
+        "date": "2026-03-01",
+        "status": "Late"
+    },
+    {
+        "studentId": "S015",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S016",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S017",
+        "date": "2026-03-01",
+        "status": "Absent"
+    },
+    {
+        "studentId": "S018",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S019",
+        "date": "2026-03-01",
+        "status": "Late"
+    },
+    {
+        "studentId": "S020",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S021",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S022",
+        "date": "2026-03-01",
+        "status": "Absent"
+    },
+    {
+        "studentId": "S023",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S024",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S025",
+        "date": "2026-03-01",
+        "status": "Late"
+    },
+    {
+        "studentId": "S026",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S027",
+        "date": "2026-03-01",
+        "status": "Absent"
+    },
+    {
+        "studentId": "S028",
+        "date": "2026-03-01",
+        "status": "Present"
+    },
+    {
+        "studentId": "S029",
+        "date": "2026-03-01",
+        "status": "Late"
+    },
+    {
+        "studentId": "S030",
+        "date": "2026-03-01",
+        "status": "Present"
+    }
+]

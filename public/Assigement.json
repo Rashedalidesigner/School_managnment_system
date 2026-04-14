@@ -1,0 +1,29 @@
+[
+    {
+        "assignmentId": "A001",
+        "title": "Math Homework 1",
+        "description": "Solve exercises 1 to 10 from chapter 3",
+        "class": "10th Grade",
+        "section": "A",
+        "assignedDate": "2026-03-01",
+        "dueDate": "2026-03-05"
+    },
+    {
+        "assignmentId": "A002",
+        "title": "Science Project",
+        "description": "Prepare a model on Solar System",
+        "class": "9th Grade",
+        "section": "B",
+        "assignedDate": "2026-03-01",
+        "dueDate": "2026-03-10"
+    },
+    {
+        "assignmentId": "A003",
+        "title": "English Essay",
+        "description": "Write an essay on 'My Favorite Hobby'",
+        "class": "8th Grade",
+        "section": "A",
+        "assignedDate": "2026-03-02",
+        "dueDate": "2026-03-07"
+    }
+]

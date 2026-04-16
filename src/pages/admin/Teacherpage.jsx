@@ -4,16 +4,16 @@ import { useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 
-const StudentPage = () => {
+const TeacherPage = () => {
     const alldata = useSelector((state) => {
         return state;
     })
-    const student = alldata.students.data;
-    console.log(student)
+    const Teacher = alldata.Teachers.data;
+    console.log(Teacher)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        StudentId: "",
+        TeacherId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +27,7 @@ const StudentPage = () => {
     }
     const clearform = () => {
         setform({
-            StudentId: "",
+            TeacherId: "",
             name: "",
             age: "",
             class: "",
@@ -45,9 +45,9 @@ const StudentPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('students', form.StudentId, form);
+            updatedata('Teachers', form.TeacherId, form);
         } else {
-            postdata('students', form);
+            postdata('Teachers', form);
         }
         clearform();
     }
@@ -60,10 +60,10 @@ const StudentPage = () => {
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-800">
-                        Student Management
+                        Teacher Management
                     </h1>
                     <p className="text-sm text-gray-500">
-                        Add, edit and manage all students
+                        Add, edit and manage all Teachers
                     </p>
                 </div>
 
@@ -71,7 +71,7 @@ const StudentPage = () => {
                     onClick={() => setOpen(true)}
                     className="bg-indigo-600 text-white px-5 py-2 rounded-xl hover:bg-indigo-700"
                 >
-                    + Add Student
+                    + Add Teacher
                 </button>
             </div>
 
@@ -79,7 +79,7 @@ const StudentPage = () => {
             <div className="bg-white p-4 rounded-xl shadow-sm mb-5">
                 <input
                     type="text"
-                    placeholder="Search student..."
+                    placeholder="Search Teacher..."
                     className="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
                 />
             </div>
@@ -90,7 +90,7 @@ const StudentPage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Student Id</th>
+                            <th className="p-3 text-left">Teacher Id</th>
                             <th className="p-3 text-left">Name</th>
                             <th className="p-3 text-left">Class</th>
                             <th>Gender</th>
@@ -103,9 +103,9 @@ const StudentPage = () => {
                     </thead>
 
                     <tbody>
-                        {student.map((item, index) => {
+                        {Teacher.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.StudentId}</td>
+                                <td>{item.TeacherId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>
                                 <td className="p-3">{item.class}</td>
                                 <td className="p-3">{item.gender}</td>
@@ -136,16 +136,16 @@ const StudentPage = () => {
                     <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg">
 
                         <h2 className="text-lg font-semibold mb-4">
-                            {isEdite ? "Edite" : "Add"} Student
+                            {isEdite ? "Edite" : "Add"} Teacher
                         </h2>
 
                         <div className="space-y-3">
                             <input
-                                value={form.StudentId}
-                                name="StudentId"
+                                value={form.TeacherId}
+                                name="TeacherId"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Student Id"
+                                placeholder="Teacher Id"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
@@ -154,7 +154,7 @@ const StudentPage = () => {
                                 name="name"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Student Name"
+                                placeholder="Teacher Name"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
@@ -236,4 +236,4 @@ const StudentPage = () => {
     );
 };
 
-export default StudentPage;
+export default TeacherPage;

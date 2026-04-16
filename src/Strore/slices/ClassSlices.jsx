@@ -9,7 +9,7 @@ const ClassSlice = createSlice({
     },
     reducers: {
         getclass(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addclass(state, action) {
             state.push(action.payload);

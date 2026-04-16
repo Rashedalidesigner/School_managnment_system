@@ -9,7 +9,7 @@ const StudentSlice = createSlice({
     },
     reducers: {
         getStudent(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addStudent(state, action) {
             state.push(action.payload);

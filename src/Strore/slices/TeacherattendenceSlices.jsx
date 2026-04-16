@@ -9,7 +9,7 @@ const TeacherattendenceSlice = createSlice({
     },
     reducers: {
         getTeacherattendence(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addTeacherattendence(state, action) {
             state.push(action.payload);

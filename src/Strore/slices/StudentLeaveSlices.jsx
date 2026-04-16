@@ -9,7 +9,7 @@ const StudentleaveSlice = createSlice({
     },
     reducers: {
         getStudentleave(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addStudentleave(state, action) {
             state.push(action.payload);

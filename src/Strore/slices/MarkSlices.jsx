@@ -9,7 +9,7 @@ const MarkSlice = createSlice({
     },
     reducers: {
         getmark(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addmark(state, action) {
             state.push(action.payload);

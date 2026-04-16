@@ -8,8 +8,9 @@ const AssignmentSlice = createSlice({
         data: []
     },
     reducers: {
-        getassignment(state, action) {
-            state(action.payload);
+        getassignment: (state, action) => {
+            // console.log(state.data)
+            state.data = action.payload;
         },
         addassignment(state, action) {
             state.push(action.payload);

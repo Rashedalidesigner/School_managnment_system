@@ -9,7 +9,7 @@ const TeacherLeaveSlice = createSlice({
     },
     reducers: {
         getTeacherLeave(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addTeacherLeave(state, action) {
             state.push(action.payload);

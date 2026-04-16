@@ -5,13 +5,12 @@ const userSlice = createSlice({
     name: "user",
     initialState: {
         title: "user data",
-        userdata: []
+        data: []
     },
     reducers: {
 
         getUser: (state, action) => {
-            state.userdata = action.payload;
-            // console.log(state.userdata + 'from get user slice')
+            state.data = action.payload;
         },
 
         addUser: (state, action) => {

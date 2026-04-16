@@ -8,8 +8,8 @@ const TeacherSlice = createSlice({
         data: []
     },
     reducers: {
-        getTeacher(state, action) {
-            state(action.payload);
+        getTeacher: (state, action) => {
+            state.data = action.payload;
         },
         addTeacher(state, action) {
             state.push(action.payload);

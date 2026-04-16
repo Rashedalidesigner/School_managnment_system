@@ -9,7 +9,7 @@ const StudnetattendenceSlice = createSlice({
     },
     reducers: {
         getStudnetattendence(state, action) {
-            state(action.payload);
+            state.data = action.payload;
         },
         addStudnetattendence(state, action) {
             state.push(action.payload);

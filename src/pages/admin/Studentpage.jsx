@@ -1,27 +1,55 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
+import { useSelector } from "react-redux";
+import { postdata } from "../../components/postdata";
+import { updatedata } from "../../components/update";
 
 const StudentPage = () => {
-    const [open, setOpen] = useState(false);
-    const [form, setform] = useState({
-        name: "",
-        class: "",
-        roll: "",
-        email: ""
+    const alldata = useSelector((state) => {
+        return state;
     })
+    const student = alldata.students.data;
+    console.log(student)
+    const [open, setOpen] = useState(false);
+    const [isEdite, setEdite] = useState(false);
+    const [form, setform] = useState({
+        StudentId: "",
+        name: "",
+        age: "",
+        class: "",
+        gender: "",
+        phone: "",
+        email: "",
+        address: "",
+    });
+    const setdata = (data) => {
+        setform(data);
+    }
+    const clearform = () => {
+        setform({
+            StudentId: "",
+            name: "",
+            age: "",
+            class: "",
+            gender: "",
+            phone: "",
+            email: "",
+            address: "",
+        })
+    }
+
     const handleonChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setform({ ...form, [name]: value });
     }
     const handlesubmit = () => {
-        console.log(form);
-        setform({
-            name: "",
-            class: "",
-            roll: "",
-            email: ""
-        })
+        if (isEdite) {
+            updatedata('students', form.StudentId, form);
+        } else {
+            postdata('students', form);
+        }
+        clearform();
     }
 
     return (
@@ -62,25 +90,31 @@ const StudentPage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
+                            <th className="p-3 text-left">Student Id</th>
                             <th className="p-3 text-left">Name</th>
                             <th className="p-3 text-left">Class</th>
-                            <th className="p-3 text-left">Roll</th>
+                            <th>Gender</th>
                             <th className="p-3 text-left">Email</th>
+                            <th className="p-3 text-left">Address</th>
+                            <th className="p-3 text-left">Age</th>
+                            <th className="p-3 text-left">Phone</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {[1, 2, 3, 4].map((item) => (
-                            <tr key={item} className="border-b hover:bg-gray-50">
-
-                                <td className="p-3 font-medium">Student {item}</td>
-                                <td className="p-3">Class {item}</td>
-                                <td className="p-3">0{item}</td>
-                                <td className="p-3">student{item}@mail.com</td>
-
+                        {student.map((item, index) => {
+                            return <tr key={index} className="border-b hover:bg-gray-50">
+                                <td>{item.StudentId}</td>
+                                <td className="p-3 font-medium">{item.name}</td>
+                                <td className="p-3">{item.class}</td>
+                                <td className="p-3">{item.gender}</td>
+                                <td className="p-3">{item.email}</td>
+                                <td className="p-3">{item.address}</td>
+                                <td className="p-3">{item.age}</td>
+                                <td className="p-3">{item.phone}</td>
                                 <td className="p-3 space-x-2">
-                                    <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg">
+                                    <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
                                     <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
@@ -89,7 +123,7 @@ const StudentPage = () => {
                                 </td>
 
                             </tr>
-                        ))}
+                        })}
                     </tbody>
 
                 </table>
@@ -102,10 +136,18 @@ const StudentPage = () => {
                     <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg">
 
                         <h2 className="text-lg font-semibold mb-4">
-                            Add Student
+                            {isEdite ? "Edite" : "Add"} Student
                         </h2>
 
                         <div className="space-y-3">
+                            <input
+                                value={form.StudentId}
+                                name="StudentId"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Student Id"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
 
                             <input
                                 value={form.name}
@@ -126,11 +168,11 @@ const StudentPage = () => {
                             />
 
                             <input
-                                value={form.roll}
-                                name="roll"
+                                value={form.gender}
+                                name="gender"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Roll"
+                                placeholder="Gender"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
@@ -143,12 +185,37 @@ const StudentPage = () => {
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
+                            <input
+                                value={form.address}
+                                name="address"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Address"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+                            <input
+                                value={form.age}
+                                name="age"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Age"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+                            <input
+                                value={form.phone}
+                                name="phone"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Phone"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+
                         </div>
 
                         <div className="flex justify-end mt-5 space-x-2">
 
                             <button
-                                onClick={() => setOpen(false)}
+                                onClick={() => { setOpen(false); setEdite(false); clearform() }}
                                 className="px-4 py-2 border rounded-lg"
                             >
                                 Cancel

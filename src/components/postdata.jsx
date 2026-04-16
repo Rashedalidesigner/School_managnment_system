@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const postdata = async (dataname, type, data) => {
+export const postdata = async (dataName, data) => {
     const backendapi = import.meta.env.VITE_BACKENDAPI;
-    const url = backendapi + dataname + '/' + type;
-    console.log('form post data', respon)
+    const url = backendapi + dataName + '/' + 'add';
+    const respon = await axios.post(url, data);
     return respon.data;
 }

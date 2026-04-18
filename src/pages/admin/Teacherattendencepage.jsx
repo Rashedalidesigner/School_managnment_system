@@ -6,9 +6,9 @@ import { updatedata } from "../../components/update";
 
 const TeacherattendencePage = () => {
     const alldata = useSelector((state) => {
-        return state;
+        return state.Teacherattendence;
     })
-    const Teacherattendence = alldata.Teacherattendences.data;
+    const Teacherattendence = alldata;
     console.log(Teacherattendence)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);

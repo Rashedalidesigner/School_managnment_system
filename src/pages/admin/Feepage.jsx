@@ -6,9 +6,9 @@ import { updatedata } from "../../components/update";
 
 const FeePage = () => {
     const alldata = useSelector((state) => {
-        return state;
+        return state.Fees;
     })
-    const Fee = alldata.Fees.data;
+    const Fee = alldata.data;
     console.log(Fee)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);

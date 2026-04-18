@@ -10,12 +10,13 @@ export default function Sidebar({ role, open, setOpen }) {
             { name: "Teachers", path: "/admin/teachers" },
             { name: "Classes", path: "/admin/classes" },
             { name: "Assignment", path: "/admin/assignment" },
-            { name: "mark", path: "/admin/mark" },
+            { name: "mark", path: "/admin/assignmentmark" },
             { name: "StudentAttendence", path: "/admin/studentattendence" },
             { name: "TeacherAttendence", path: "/admin/teacherattendence" },
             { name: "Studentleave", path: "/admin/studentleave" },
-            { name: "Teacher", path: "/admin/leave" },
+            { name: "Teacherleave", path: "/admin/teacherleave" },
             { name: "User", path: "/admin/user" },
+            { name: "Fees", path: "/admin/fees" },
 
         ],
         teacher: [

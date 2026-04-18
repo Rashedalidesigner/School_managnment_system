@@ -1,19 +1,28 @@
-import { useState } from "react";
-
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import { getclass } from "../../Strore/slices/ClassSlices";
+import axios from "axios";
 
 const ClassroomPage = () => {
-    const alldata = useSelector((state) => {
-        return state;
+    const fetchAssignments = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const classtdata = await axios.get(backendapi + 'classes');
+        // console.log(classtdata)
+        dispatch(getclass(classtdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentsdata = useSelector((state) => {
+        return state.classslices.data;
     })
-    const classroom = alldata.classrooms.data;
-    console.log(classroom)
+    const data = assignmentsdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        classroomId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +36,7 @@ const ClassroomPage = () => {
     }
     const clearform = () => {
         setform({
-            classroomId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +46,13 @@ const ClassroomPage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchAssignments();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,12 +61,20 @@ const ClassroomPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('classrooms', form.classroomId, form);
+            updatedata('classes', form.AssignmentId, form);
         } else {
-            postdata('classrooms', form);
+            postdata('classes', form);
         }
         clearform();
+    };
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
+    // console.log(classdata)
 
     return (
 
@@ -103,7 +127,7 @@ const ClassroomPage = () => {
                     </thead>
 
                     <tbody>
-                        {classroom.map((item, index) => {
+                        {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.classroomId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>
@@ -117,7 +141,7 @@ const ClassroomPage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

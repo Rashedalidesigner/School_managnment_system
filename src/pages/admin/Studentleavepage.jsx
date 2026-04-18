@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getStudentleave } from "../../Strore/slices/StudentLeaveSlices";
 
 const StudentleavePage = () => {
-    const alldata = useSelector((state) => {
-        return state;
+    const fetchAssignments = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const studentleave = await axios.get(backendapi + 'studentLeave');
+        console.log(studentleave)
+        dispatch(getStudentleave(studentleave.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.studentleave.data;
     })
-    const Studentleave = alldata.Studentleaves.data;
-    console.log(Studentleave)
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        StudentleaveId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +37,7 @@ const StudentleavePage = () => {
     }
     const clearform = () => {
         setform({
-            StudentleaveId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +47,13 @@ const StudentleavePage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchAssignments();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,11 +62,18 @@ const StudentleavePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Studentleaves', form.StudentleaveId, form);
+            updatedata('studentLeave', form.AssignmentId, form);
         } else {
-            postdata('Studentleaves', form);
+            postdata('studentLeave', form);
         }
         clearform();
+    };
+
+    // console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -103,7 +127,7 @@ const StudentleavePage = () => {
                     </thead>
 
                     <tbody>
-                        {Studentleave.map((item, index) => {
+                        {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.StudentleaveId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>

@@ -6,9 +6,9 @@ import { updatedata } from "../../components/update";
 
 const TeacherleavePage = () => {
     const alldata = useSelector((state) => {
-        return state;
+        return state.TeacherLeaveSlice;
     })
-    const Teacherleave = alldata.Teacherleaves.data;
+    const Teacherleave = alldata.data;
     console.log(Teacherleave)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);

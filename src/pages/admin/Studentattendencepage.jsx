@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getStudnetattendence } from "../../Strore/slices/StudentattendenceSlices";
 
 const StudentattendencePage = () => {
-    const alldata = useSelector((state) => {
-        return state;
+    const fetchstudentattendence = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const studentattendence = await axios.get(backendapi + 'studentattendence');
+        console.log(studentattendence)
+        dispatch(getStudnetattendence(studentattendence.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.studentattendence.data;
     })
-    const Studentattendence = alldata.Studentattendences.data;
-    console.log(Studentattendence)
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        StudentattendenceId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +37,7 @@ const StudentattendencePage = () => {
     }
     const clearform = () => {
         setform({
-            StudentattendenceId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +47,13 @@ const StudentattendencePage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchstudentattendence();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,11 +62,18 @@ const StudentattendencePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Studentattendences', form.StudentattendenceId, form);
+            updatedata('studentattendence', form.AssignmentId, form);
         } else {
-            postdata('Studentattendences', form);
+            postdata('studentattendence', form);
         }
         clearform();
+    };
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -103,7 +127,7 @@ const StudentattendencePage = () => {
                     </thead>
 
                     <tbody>
-                        {Studentattendence.map((item, index) => {
+                        {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.StudentattendenceId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>

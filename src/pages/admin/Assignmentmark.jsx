@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import { getmark } from "../../Strore/slices/MarkSlices";
+// import { user } from "../../components/callalldata";
+import axios from "axios";
 
 const AssignmentmarkPage = () => {
-    const alldata = useSelector((state) => {
-        return state;
+    const fetchAssignments = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const asiignmentdata = await axios.get(backendapi + 'assignmentmark');
+        dispatch(getmark(asiignmentdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.mark.data;
     })
-    const Assignmentmark = alldata.Assignmentmarks.data;
-    console.log(Assignmentmark)
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentmarkId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +37,7 @@ const AssignmentmarkPage = () => {
     }
     const clearform = () => {
         setform({
-            AssignmentmarkId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +47,13 @@ const AssignmentmarkPage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchAssignments();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,11 +62,18 @@ const AssignmentmarkPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Assignmentmarks', form.AssignmentmarkId, form);
+            updatedata('Assignments', form.AssignmentId, form);
         } else {
-            postdata('Assignmentmarks', form);
+            postdata('Assignments', form);
         }
         clearform();
+    };
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -103,7 +127,7 @@ const AssignmentmarkPage = () => {
                     </thead>
 
                     <tbody>
-                        {Assignmentmark.map((item, index) => {
+                        {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.AssignmentmarkId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>

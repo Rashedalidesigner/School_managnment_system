@@ -6,10 +6,10 @@ import { updatedata } from "../../components/update";
 
 const TeacherPage = () => {
     const alldata = useSelector((state) => {
-        return state;
+        return state.teachers;
     })
-    const Teacher = alldata.Teachers.data;
-    console.log(Teacher)
+    // console.log(alldata);
+    const Teacher = alldata.data.data;
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
@@ -50,6 +50,10 @@ const TeacherPage = () => {
             postdata('Teachers', form);
         }
         clearform();
+    }
+    if (Teacher == []) {
+        console.log(Teacher)
+        return <h1>Loading ...</h1>
     }
 
     return (

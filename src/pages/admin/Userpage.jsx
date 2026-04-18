@@ -6,10 +6,11 @@ import { updatedata } from "../../components/update";
 
 const UserPage = () => {
     const alldata = useSelector((state) => {
-        return state;
+        return state.userSlice;
     })
-    const User = alldata.Users.data;
-    console.log(User)
+    // console.log(alldata);
+    const User = alldata.Users;
+    // console.log(User)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
@@ -50,6 +51,10 @@ const UserPage = () => {
             postdata('Users', form);
         }
         clearform();
+    }
+    if (User == []) {
+        console.log(User)
+        return <h1>Loading ...</h1>
     }
 
     return (

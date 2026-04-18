@@ -6,10 +6,9 @@ import { updatedata } from "../../components/update";
 
 const StudentPage = () => {
     const alldata = useSelector((state) => {
-        return state;
+        return state.students;
     })
-    const student = alldata.students.data;
-    console.log(student)
+    const student = alldata.data.data;
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
@@ -50,6 +49,10 @@ const StudentPage = () => {
             postdata('students', form);
         }
         clearform();
+    }
+
+    if (!student) {
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -105,7 +108,7 @@ const StudentPage = () => {
                     <tbody>
                         {student.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.StudentId}</td>
+                                <td className="p-3" >{item.StudentId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>
                                 <td className="p-3">{item.class}</td>
                                 <td className="p-3">{item.gender}</td>

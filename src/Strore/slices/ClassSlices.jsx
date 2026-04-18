@@ -17,8 +17,10 @@ const ClassSlice = createSlice({
         updateclass(state, action) {
             state(action.payload)
         },
-        removeclass(state, action) {
-            state(action.payload)
+        removeclass: (state, action) => {
+            const newdata = state.data.filter((item) => item.ClassId !== action.payload);
+            console.log(newdata, "data form slice");
+            state.data = newdata;
         },
     }
 });

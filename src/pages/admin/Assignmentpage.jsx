@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from 'axios'
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import { getassignment } from "../../Strore/slices/AssignmentSlices";
 
 const AssignmentPage = () => {
-    const alldata = useSelector((state) => {
-        return state;
+    const fetchAssignments = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const asiignmentdata = await axios.get(backendapi + 'assignments');
+        dispatch(getassignment(asiignmentdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentsdata = useSelector((state) => {
+        return state.assignments.data;
     })
-    const Assignment = alldata.Assignments.data;
-    console.log(Assignment)
+    const data = assignmentsdata;
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
@@ -37,6 +45,13 @@ const AssignmentPage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchAssignments();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -50,7 +65,15 @@ const AssignmentPage = () => {
             postdata('Assignments', form);
         }
         clearform();
+    };
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
+
 
     return (
 
@@ -103,7 +126,7 @@ const AssignmentPage = () => {
                     </thead>
 
                     <tbody>
-                        {Assignment.map((item, index) => {
+                        {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.AssignmentId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>

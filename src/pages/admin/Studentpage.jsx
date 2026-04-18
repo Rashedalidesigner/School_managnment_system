@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getStudent } from "../../Strore/slices/StudentSlices";
 
 const StudentPage = () => {
-    const alldata = useSelector((state) => {
-        return state.students;
+    const fetchetstudent = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const student = await axios.get(backendapi + 'students');
+        // console.log(student)
+        dispatch(getStudent(student.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.students.data;
     })
-    const student = alldata.data.data;
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        StudentId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -26,7 +37,7 @@ const StudentPage = () => {
     }
     const clearform = () => {
         setform({
-            StudentId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -36,6 +47,13 @@ const StudentPage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchetstudent();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -44,16 +62,20 @@ const StudentPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('students', form.StudentId, form);
+            updatedata('Assignments', form.AssignmentId, form);
         } else {
-            postdata('students', form);
+            postdata('Assignments', form);
         }
         clearform();
-    }
+    };
 
-    if (!student) {
+    // console.log(data)
+
+    if (data == []) {
+        console.log(data);
         return <h1>Loading ...</h1>
     }
+
 
     return (
 
@@ -106,7 +128,7 @@ const StudentPage = () => {
                     </thead>
 
                     <tbody>
-                        {student.map((item, index) => {
+                        {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td className="p-3" >{item.StudentId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>

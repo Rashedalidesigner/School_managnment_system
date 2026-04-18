@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getTeacherattendence } from "../../Strore/slices/TeacherattendenceSlices";
 
 const TeacherattendencePage = () => {
-    const alldata = useSelector((state) => {
-        return state.Teacherattendence;
+    const fetchteacherattendence = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const asiignmentdata = await axios.get(backendapi + 'teacherattendence');
+        dispatch(getTeacherattendence(asiignmentdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.teacherattendence.data;
     })
-    const Teacherattendence = alldata;
-    console.log(Teacherattendence)
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        TeacherattendenceId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +36,7 @@ const TeacherattendencePage = () => {
     }
     const clearform = () => {
         setform({
-            TeacherattendenceId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +46,13 @@ const TeacherattendencePage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchteacherattendence();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,11 +61,18 @@ const TeacherattendencePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Teacherattendences', form.TeacherattendenceId, form);
+            updatedata('Assignments', form.AssignmentId, form);
         } else {
-            postdata('Teacherattendences', form);
+            postdata('Assignments', form);
         }
         clearform();
+    };
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -103,7 +126,7 @@ const TeacherattendencePage = () => {
                     </thead>
 
                     <tbody>
-                        {Teacherattendence.map((item, index) => {
+                        {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.TeacherattendenceId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>

@@ -1,19 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getTeacherLeave } from "../../Strore/slices/TeacherLeave";
+import { deletedata } from "../../components/deletedata";
 
 const TeacherleavePage = () => {
-    const alldata = useSelector((state) => {
-        return state.TeacherLeaveSlice;
+    const fetcherteacherleave = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const asiignmentdata = await axios.get(backendapi + 'teacherLeave');
+
+        dispatch(getTeacherLeave(asiignmentdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.teacherleave.data;
     })
-    const Teacherleave = alldata.data;
-    console.log(Teacherleave)
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        TeacherleaveId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +38,7 @@ const TeacherleavePage = () => {
     }
     const clearform = () => {
         setform({
-            TeacherleaveId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +48,13 @@ const TeacherleavePage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetcherteacherleave();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,11 +63,23 @@ const TeacherleavePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Teacherleaves', form.TeacherleaveId, form);
+            updatedata('teacherLeave', form.AssignmentId, form);
         } else {
-            postdata('Teacherleaves', form);
+            postdata('teacherLeave', form);
         }
         clearform();
+    };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("teacherLeave", item.ClassId);
+        console.log(res);
+    }
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -103,7 +133,7 @@ const TeacherleavePage = () => {
                     </thead>
 
                     <tbody>
-                        {Teacherleave.map((item, index) => {
+                        {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.TeacherleaveId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>
@@ -117,7 +147,7 @@ const TeacherleavePage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

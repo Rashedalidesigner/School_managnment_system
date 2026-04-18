@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getTeacher } from "../../Strore/slices/TeacherSlices";
+import { deletedata } from "../../components/deletedata";
 
 const TeacherPage = () => {
-    const alldata = useSelector((state) => {
-        return state.teachers;
+    const fetchteacher = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const asiignmentdata = await axios.get(backendapi + 'teachers');
+        dispatch(getTeacher(asiignmentdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.teachers.data;
     })
-    // console.log(alldata);
-    const Teacher = alldata.data.data;
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        TeacherId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +37,7 @@ const TeacherPage = () => {
     }
     const clearform = () => {
         setform({
-            TeacherId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +47,13 @@ const TeacherPage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchteacher();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,14 +62,22 @@ const TeacherPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Teachers', form.TeacherId, form);
+            updatedata('teachers', form.AssignmentId, form);
         } else {
-            postdata('Teachers', form);
+            postdata('teachers', form);
         }
         clearform();
+    };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("teachers", item.ClassId);
+        console.log(res);
     }
-    if (Teacher == []) {
-        console.log(Teacher)
+
+    console.log(data)
+
+    if (data == []) {
+        console.log(data);
         return <h1>Loading ...</h1>
     }
 
@@ -107,7 +132,7 @@ const TeacherPage = () => {
                     </thead>
 
                     <tbody>
-                        {Teacher.map((item, index) => {
+                        {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.TeacherId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>
@@ -121,7 +146,7 @@ const TeacherPage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

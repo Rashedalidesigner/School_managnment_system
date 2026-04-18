@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
+import axios from "axios";
+import { getFee } from "../../Strore/slices/FeeSlices";
+import { deletedata } from "../../components/deletedata";
 
 const FeePage = () => {
-    const alldata = useSelector((state) => {
-        return state.Fees;
+    const fetchfee = async () => {
+        const backendapi = import.meta.env.VITE_BACKENDAPI;
+        const asiignmentdata = await axios.get(backendapi + 'fee');
+        dispatch(getFee(asiignmentdata.data.data));
+    };
+    const dispatch = useDispatch();
+
+    const assignmentmarksdata = useSelector((state) => {
+        return state.fee.data;
     })
-    const Fee = alldata.data;
-    console.log(Fee)
+    const data = assignmentmarksdata;
+    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        FeeId: "",
+        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -27,7 +37,7 @@ const FeePage = () => {
     }
     const clearform = () => {
         setform({
-            FeeId: "",
+            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -37,6 +47,13 @@ const FeePage = () => {
             address: "",
         })
     }
+    useEffect(() => {
+        try {
+            fetchfee();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -45,11 +62,23 @@ const FeePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Fees', form.FeeId, form);
+            updatedata('fee', form.AssignmentId, form);
         } else {
-            postdata('Fees', form);
+            postdata('fee', form);
         }
         clearform();
+    };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("fee", item.ClassId);
+        console.log(res);
+    }
+
+    // console.log(data)
+
+    if (data == []) {
+        console.log(data);
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -103,7 +132,7 @@ const FeePage = () => {
                     </thead>
 
                     <tbody>
-                        {Fee.map((item, index) => {
+                        {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
                                 <td>{item.FeeId}</td>
                                 <td className="p-3 font-medium">{item.name}</td>
@@ -117,7 +146,7 @@ const FeePage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

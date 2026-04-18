@@ -10,6 +10,7 @@ import studentattendence from './slices/StudentattendenceSlices.jsx';
 import assignments from './slices/AssignmentSlices.jsx';
 import mark from './slices/MarkSlices.jsx';
 import classslice from './slices/ClassSlices.jsx';
+import FeeSlice from "./slices/FeeSlices.jsx"
 
 
 const store = configureStore({
@@ -24,6 +25,7 @@ const store = configureStore({
         assignments: assignments,
         mark: mark,
         classslices: classslice,
+        fee: FeeSlice
     }
 });
 

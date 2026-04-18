@@ -5,6 +5,7 @@ import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
 import { getStudentleave } from "../../Strore/slices/StudentLeaveSlices";
+import { deletedata } from "../../components/deletedata";
 
 const StudentleavePage = () => {
     const fetchAssignments = async () => {
@@ -68,6 +69,11 @@ const StudentleavePage = () => {
         }
         clearform();
     };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("studentLeave", item.ClassId);
+        console.log(res);
+    }
 
     // console.log(data)
 
@@ -141,7 +147,7 @@ const StudentleavePage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

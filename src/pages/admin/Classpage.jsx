@@ -4,6 +4,7 @@ import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import { getclass } from "../../Strore/slices/ClassSlices";
 import axios from "axios";
+import { deletedata } from "../../components/deletedata";
 
 const ClassroomPage = () => {
     const fetchAssignments = async () => {
@@ -67,6 +68,11 @@ const ClassroomPage = () => {
         }
         clearform();
     };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("classes", item.ClassId);
+        console.log(res);
+    }
 
     console.log(data)
 

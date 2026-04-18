@@ -5,6 +5,7 @@ import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
 import { getStudent } from "../../Strore/slices/StudentSlices";
+import { deletedata } from "../../components/deletedata";
 
 const StudentPage = () => {
     const fetchetstudent = async () => {
@@ -62,12 +63,17 @@ const StudentPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Assignments', form.AssignmentId, form);
+            updatedata('students', form.AssignmentId, form);
         } else {
-            postdata('Assignments', form);
+            postdata('students', form);
         }
         clearform();
     };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("students", item.ClassId);
+        console.log(res);
+    }
 
     // console.log(data)
 
@@ -142,7 +148,7 @@ const StudentPage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

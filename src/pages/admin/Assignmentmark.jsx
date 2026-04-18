@@ -6,6 +6,7 @@ import { updatedata } from "../../components/update";
 import { getmark } from "../../Strore/slices/MarkSlices";
 // import { user } from "../../components/callalldata";
 import axios from "axios";
+import { deletedata } from "../../components/deletedata";
 
 const AssignmentmarkPage = () => {
     const fetchAssignments = async () => {
@@ -68,6 +69,11 @@ const AssignmentmarkPage = () => {
         }
         clearform();
     };
+
+    const handledelte = async (item) => {
+        const res = await deletedata("classes", item.ClassId);
+        console.log(res);
+    }
 
     console.log(data)
 
@@ -141,7 +147,7 @@ const AssignmentmarkPage = () => {
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
                                     </button>
-                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg">
+                                    <button className="px-3 py-1 bg-red-100 text-red-600 rounded-lg" onClick={() => handledelte(item)}>
                                         Delete
                                     </button>
                                 </td>

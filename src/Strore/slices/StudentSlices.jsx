@@ -12,13 +12,21 @@ const StudentSlice = createSlice({
             state.data = action.payload;
         },
         addStudent(state, action) {
-            state.push(action.payload);
+            state.data.push(action.payload);
         },
-        updateStudent(state, action) {
-            state(action.payload)
+        updateStudent: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
-        removeStudent(state, action) {
-            state(action.payload)
+        removeStudent: (state, action) => {
+            // console.log(state.data)
+            state.data = state.data.filter(item => {
+                console.log(state.data);
+                return item._id.toString() !== action.payload._id.toString()
+            });
         },
     }
 });

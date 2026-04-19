@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getStudent } from "../../Strore/slices/StudentSlices";
+import { addStudent, getStudent, removeStudent, updateStudent } from "../../Strore/slices/StudentSlices";
 import { deletedata } from "../../components/deletedata";
 
 const StudentPage = () => {
     const fetchetstudent = async () => {
         const backendapi = import.meta.env.VITE_BACKENDAPI;
         const student = await axios.get(backendapi + 'students');
-        // console.log(student)
         dispatch(getStudent(student.data.data));
     };
     const dispatch = useDispatch();
@@ -24,7 +23,6 @@ const StudentPage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
         name: "",
         age: "",
         class: "",
@@ -38,7 +36,6 @@ const StudentPage = () => {
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
             name: "",
             age: "",
             class: "",
@@ -63,19 +60,20 @@ const StudentPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('students', form.AssignmentId, form);
+            updatedata('students', form.StudentId, form);
+            dispatch(updateStudent(form));
         } else {
             postdata('students', form);
+            dispatch(addStudent(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("students", item.ClassId);
+        const res = await deletedata("students", item.StudentId);
+        dispatch(removeStudent(item));
         console.log(res);
     }
-
-    // console.log(data)
 
     if (data == []) {
         console.log(data);
@@ -124,7 +122,7 @@ const StudentPage = () => {
                             <th className="p-3 text-left">Student Id</th>
                             <th className="p-3 text-left">Name</th>
                             <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
+                            <th className="p-3 text-left">Gender</th>
                             <th className="p-3 text-left">Email</th>
                             <th className="p-3 text-left">Address</th>
                             <th className="p-3 text-left">Age</th>
@@ -136,8 +134,8 @@ const StudentPage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td className="p-3" >{item.StudentId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
+                                <td className="p-3 font-medium" >{item.StudentId}</td>
+                                <td className="p-3 ">{item.name}</td>
                                 <td className="p-3">{item.class}</td>
                                 <td className="p-3">{item.gender}</td>
                                 <td className="p-3">{item.email}</td>
@@ -171,14 +169,7 @@ const StudentPage = () => {
                         </h2>
 
                         <div className="space-y-3">
-                            <input
-                                value={form.StudentId}
-                                name="StudentId"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Student Id"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+
 
                             <input
                                 value={form.name}

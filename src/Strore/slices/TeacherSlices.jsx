@@ -12,13 +12,17 @@ const TeacherSlice = createSlice({
             state.data = action.payload;
         },
         addTeacher(state, action) {
-            state.push(action.payload);
+            state.data.push(action.payload);
         },
-        updateTeacher(state, action) {
-            state(action.payload)
+        updateTeacher: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
-        removeTeacher(state, action) {
-            state(action.payload)
+        removeTeacher: (state, action) => {
+            state.data = state.data.filter(item => item._id.toString() !== action.payload._id.toString());
         },
     }
 });

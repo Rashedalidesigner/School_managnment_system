@@ -13,13 +13,17 @@ const AssignmentSlice = createSlice({
             state.data = action.payload;
         },
         addassignment(state, action) {
-            state.push(action.payload);
+            state.data.push(action.payload);
         },
-        updateassignment(state, action) {
-            state(action.payload)
+        updateassignment: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
-        removeassignment(state, action) {
-            state(action.payload)
+        removeassignment: (state, action) => {
+            state.data = state.data.filter(item => item._id.toString() !== action.payload._id.toString());
         },
     }
 });

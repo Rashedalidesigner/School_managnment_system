@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getTeacher } from "../../Strore/slices/TeacherSlices";
+import { addTeacher, getTeacher, removeTeacher, updateTeacher } from "../../Strore/slices/TeacherSlices";
 import { deletedata } from "../../components/deletedata";
 
 const TeacherPage = () => {
@@ -19,32 +19,36 @@ const TeacherPage = () => {
         return state.teachers.data;
     })
     const data = assignmentmarksdata;
-    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
+
+        firstName: "",
+        lastName: "",
         email: "",
+        phone: "",
+        subject: "",
+        gender: "",
         address: "",
+        qualification: "",
+        experience: "",
+        hireDate: ""
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
+            firstName: "",
+            lastName: "",
             email: "",
+            phone: "",
+            subject: "",
+            gender: "",
             address: "",
+            qualification: "",
+            experience: "",
+            hireDate: ""
         })
     }
     useEffect(() => {
@@ -60,17 +64,21 @@ const TeacherPage = () => {
         const value = e.target.value;
         setform({ ...form, [name]: value });
     }
-    const handlesubmit = () => {
+    const handlesubmit = async () => {
         if (isEdite) {
-            updatedata('teachers', form.AssignmentId, form);
+            updatedata('teachers', form.TeacherId, form);
+            dispatch(updateTeacher(form));
         } else {
-            postdata('teachers', form);
+            const result = await postdata('teachers', form);
+            dispatch(addTeacher(form));
+            console.log(result);
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("teachers", item.ClassId);
+        const res = await deletedata("teachers", item.TeacherId);
+        dispatch(removeTeacher(item));
         console.log(res);
     }
 
@@ -119,13 +127,14 @@ const TeacherPage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Teacher Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
+                            <th className="p-3 text-left text-medium">Teacher Id</th>
+                            <th className="p-3 text-left">Full Name</th>
+                            <th className="p-3 text-left">Exprence</th>
+                            <th className="p-3 text-left">Qulification</th>
+                            <th className="p-3 text-left">Gender</th>
                             <th className="p-3 text-left">Email</th>
                             <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
+                            <th className="p-3 text-left">Hire date</th>
                             <th className="p-3 text-left">Phone</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
@@ -134,13 +143,14 @@ const TeacherPage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.TeacherId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
+                                <td className="p-3 font-medium">{item.TeacherId}</td>
+                                <td className="p-3 ">{item.firstName + " " + item.lastName}</td>
+                                <td className="p-3">{item.experience}</td>
+                                <td className="p-3">{item.qualification}</td>
                                 <td className="p-3">{item.gender}</td>
                                 <td className="p-3">{item.email}</td>
                                 <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
+                                <td className="p-3">{item.hireDate}</td>
                                 <td className="p-3">{item.phone}</td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
@@ -169,41 +179,39 @@ const TeacherPage = () => {
                         </h2>
 
                         <div className="space-y-3">
+
                             <input
-                                value={form.TeacherId}
-                                name="TeacherId"
+                                value={form.firstName}
+                                name="firstName"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Teacher Id"
+                                placeholder="First Name"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.lastName}
+                                name="lastName"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Teacher Name"
+                                placeholder="Last Name"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.class}
-                                name="class"
+                                value={form.subject}
+                                name="subject"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Class"
+                                placeholder="Subject"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <select name="gender" id="gender" value={form.gender} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg" placeholder="Gender">
+                                <option value="Common">Common</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
 
                             <input
                                 value={form.email}
@@ -211,6 +219,14 @@ const TeacherPage = () => {
                                 onChange={handleonChange}
                                 type="email"
                                 placeholder="Email"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+                            <input
+                                value={form.phone}
+                                name="phone"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Phone"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
@@ -223,19 +239,27 @@ const TeacherPage = () => {
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
                             <input
-                                value={form.age}
-                                name="age"
+                                value={form.qualification}
+                                name="qualification"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Age"
+                                placeholder="Qualification"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
                             <input
-                                value={form.phone}
-                                name="phone"
+                                value={form.experience}
+                                name="experience"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Phone"
+                                placeholder="Experience"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+                            <input
+                                value={form.hireDate}
+                                name="hireDate"
+                                onChange={handleonChange}
+                                type="date"
+                                placeholder="Hire Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 

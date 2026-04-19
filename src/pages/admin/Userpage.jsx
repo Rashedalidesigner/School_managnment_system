@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getUser } from "../../Strore/slices/UserSlices";
+import { addUser, getUser, removeUser, updateUser } from "../../Strore/slices/UserSlices";
 import { deletedata } from "../../components/deletedata";
+import Id from "../../components/Id";
 
 const UserPage = () => {
     const fetcheuser = async () => {
@@ -19,41 +20,28 @@ const UserPage = () => {
         return state.users.data;
     })
     const data = assignmentmarksdata;
-    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
+        username: "",
+        usertype: "Student",
+        useremail: "",
         phone: "",
-        email: "",
-        address: "",
+        password: "",
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
+            username: "",
+            usertype: "",
+            useremail: "",
             phone: "",
-            email: "",
-            address: "",
+            password: "",
         })
     }
-    useEffect(() => {
-        try {
-            fetcheuser();
-        } catch (error) {
-            console.log(error)
-        }
-    }, []);
+
 
     const handleonChange = (e) => {
         const name = e.target.name;
@@ -62,19 +50,30 @@ const UserPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('users', form.AssignmentId, form);
+            updatedata('users', form.userId, form);
+            dispatch(updateUser(form));
         } else {
             postdata('users', form);
+            dispatch(addUser(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("users", item.ClassId);
+        const res = await deletedata("users", item.userId);
+        dispatch(removeUser(item));
         console.log(res);
     }
 
-    console.log(data)
+    useEffect(() => {
+        try {
+            fetcheuser();
+        } catch (error) {
+            console.log(error)
+        }
+    }, []);
+
+    // console.log(data)
 
     if (data == []) {
         console.log(data);
@@ -121,12 +120,9 @@ const UserPage = () => {
                         <tr>
                             <th className="p-3 text-left">User Id</th>
                             <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
                             <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
                             <th className="p-3 text-left">Phone</th>
+                            <th className="p-3 text-left">User Type</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -134,14 +130,12 @@ const UserPage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.UserId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
+                                <td className="p-3 font-medium">{item.userId}</td>
+                                <td className="p-3 ">{item.username}</td>
+                                <td className="p-3">{item.useremail}</td>
                                 <td className="p-3">{item.phone}</td>
+                                <td className="p-3">{item.usertype}</td>
+                                {/* <td className="p-3">{item.password}</td> */}
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -169,18 +163,18 @@ const UserPage = () => {
                         </h2>
 
                         <div className="space-y-3">
-                            <input
-                                value={form.UserId}
-                                name="UserId"
+                            {/* <input
+                                value={form.userId}
+                                name="userId"
                                 onChange={handleonChange}
                                 type="text"
                                 placeholder="User Id"
                                 className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            /> */}
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.username}
+                                name="username"
                                 onChange={handleonChange}
                                 type="text"
                                 placeholder="User Name"
@@ -188,57 +182,38 @@ const UserPage = () => {
                             />
 
                             <input
-                                value={form.class}
-                                name="class"
+                                value={form.useremail}
+                                name="useremail"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Class"
+                                placeholder="user email"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.address}
-                                name="address"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
                             <input
                                 value={form.phone}
                                 name="phone"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Phone"
+                                placeholder="phone"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
+                            <select name="usertype" id="usertype"
+                                value={form.usertype} className="w-full px-4 py-2 border rounded-lg" onChange={handleonChange}>
+                                <option value="Student">Student</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+
+                            <input
+                                value={form.password}
+                                name="password"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="password"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
                         </div>
 
                         <div className="flex justify-end mt-5 space-x-2">

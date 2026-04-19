@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getTeacherLeave } from "../../Strore/slices/TeacherLeave";
+import { addTeacherLeave, getTeacherLeave, removeTeacherLeave, updateTeacherLeave } from "../../Strore/slices/TeacherLeave";
 import { deletedata } from "../../components/deletedata";
 
 const TeacherleavePage = () => {
@@ -24,28 +24,22 @@ const TeacherleavePage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+        TeacherId: "",
+        date: "",
+        reason: "",
+        status: "Pending",
+        duration: ""
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+            TeacherId: "",
+            date: "",
+            reason: "",
+            status: "",
+            duration: ""
         })
     }
     useEffect(() => {
@@ -63,15 +57,18 @@ const TeacherleavePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('teacherLeave', form.AssignmentId, form);
+            updatedata('teacherLeave', form.TeacherId, form);
+            dispatch(updateTeacherLeave(form));
         } else {
             postdata('teacherLeave', form);
+            dispatch(addTeacherLeave(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("teacherLeave", item.ClassId);
+        const res = await deletedata("teacherLeave", item.TeacherId);
+        dispatch(removeTeacherLeave(item));
         console.log(res);
     }
 
@@ -120,14 +117,11 @@ const TeacherleavePage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Teacherleave Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
+                            <th className="p-3 text-left">Teacher Id</th>
+                            <th className="p-3 text-left">Date</th>
+                            <th className="p-3 text-left">Reason</th>
+                            <th className="p-3 text-left">Status</th>
+                            <th className="p-3 text-left">Duration</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -135,14 +129,19 @@ const TeacherleavePage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.TeacherleaveId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                <td className="p-3 font-medium">{item.TeacherId}</td>
+                                <td className="p-3">{item.date}</td>
+                                <td className="p-3">{item.reason}</td>
+
+                                <td className="p-3">
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.status === "Approved" ? "bg-green-100 text-green-800" :
+                                        item.status === "Rejected" ? "bg-red-100 text-red-800" :
+                                            "bg-yellow-100 text-yellow-800"
+                                        }`}>
+                                        {item.status}
+                                    </span>
+                                </td>
+                                <td className="p-3">{item.duration} day</td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -171,72 +170,44 @@ const TeacherleavePage = () => {
 
                         <div className="space-y-3">
                             <input
-                                value={form.TeacherleaveId}
-                                name="TeacherleaveId"
+                                value={form.TeacherId}
+                                name="TeacherId"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Teacherleave Id"
+                                placeholder="Teacher Id"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.date}
+                                name="date"
                                 onChange={handleonChange}
-                                type="text"
-                                placeholder="Teacherleave Name"
+                                type="date"
+                                placeholder="Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.class}
-                                name="class"
+                                value={form.reason}
+                                name="reason"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Class"
+                                placeholder="Reason"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <select name="status" id="" value={form.status} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
 
                             <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.address}
-                                name="address"
+                                value={form.duration}
+                                name="duration"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.phone}
-                                name="phone"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
+                                placeholder="Duration"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 

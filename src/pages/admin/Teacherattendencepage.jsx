@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getTeacherattendence } from "../../Strore/slices/TeacherattendenceSlices";
+import { addTeacherattendence, getTeacherattendence, removeTeacherattendence, updateTeacherattendence } from "../../Strore/slices/TeacherattendenceSlices";
 import { deletedata } from "../../components/deletedata";
 
 const TeacherattendencePage = () => {
@@ -23,28 +23,22 @@ const TeacherattendencePage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+        TeacherId: "",
+        date: "",
+        status: "",
+        checkIn: "08:00",
+        checkOut: "08:00"
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+            TeacherId: "",
+            date: "",
+            status: "",
+            checkIn: "",
+            checkOut: ""
         })
     }
     useEffect(() => {
@@ -62,15 +56,18 @@ const TeacherattendencePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('teacherattendence', form.AssignmentId, form);
+            updatedata('teacherattendence', form.TeacherId, form);
+            dispatch(updateTeacherattendence(form));
         } else {
             postdata('teacherattendence', form);
+            dispatch(addTeacherattendence(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("teacherattendence", item.ClassId);
+        const res = await deletedata("teacherattendence", item.TeacherId);
+        dispatch(removeTeacherattendence(item));
         console.log(res);
     }
 
@@ -119,14 +116,11 @@ const TeacherattendencePage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Teacherattendence Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
+                            <th className="p-3 text-left">Teacher Id</th>
+                            <th className="p-3 text-left">Date</th>
+                            <th className="p-3 text-left">Status</th>
+                            <th className="p-3 text-left">Check In</th>
+                            <th className="p-3 text-left">Check Out</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -134,14 +128,15 @@ const TeacherattendencePage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.TeacherattendenceId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                <td className="p-3 font-medium">{item.TeacherId}</td>
+                                <td className="p-3">{item.date}</td>
+                                <td className="p-3">
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.status === 'Present' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                        {item.status}
+                                    </span>
+                                </td>
+                                <td className="p-3">{item.checkIn}</td>
+                                <td className="p-3">{item.checkOut}</td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -170,74 +165,55 @@ const TeacherattendencePage = () => {
 
                         <div className="space-y-3">
                             <input
-                                value={form.TeacherattendenceId}
-                                name="TeacherattendenceId"
+                                value={form.TeacherId}
+                                name="TeacherId"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Teacherattendence Id"
+                                placeholder="Teacher Id"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.date}
+                                name="date"
                                 onChange={handleonChange}
-                                type="text"
-                                placeholder="Teacherattendence Name"
+                                type="date"
+                                placeholder="Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
+                            <select name="status" id="status" value={form.status} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="Late">Late</option>
+                                <option value="Present">Present</option>
+                                <option value="Absent">Absent</option>
+                            </select>
 
-                            <input
-                                value={form.class}
-                                name="class"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Class"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <select name="checkIn" id="checkIn" value={form.checkIn} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
 
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            </select>
 
-                            <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <select name="checkOut" id="checkOut" value={form.checkOut} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                            </select>
 
-                            <input
-                                value={form.address}
-                                name="address"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.phone}
-                                name="phone"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
 
                         </div>
 

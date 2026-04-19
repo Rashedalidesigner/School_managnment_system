@@ -1,71 +1,43 @@
-import { useNavigate } from "react-router-dom";
+import React from 'react';
 
-export default function Sidebar({ role, open, setOpen }) {
+import { Home, Users, BookOpen, ClipboardList, CheckSquare, Calendar, UserCheck, FileText, DollarSign, Menu } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+
+const menuItems = [
+    { name: "Students", path: "/admin/students", icon: Users },
+    { name: "Teachers", path: "/admin/teachers", icon: UserCheck },
+    { name: "Classes", path: "/admin/classes", icon: BookOpen },
+    { name: "Assignment", path: "/admin/assignments", icon: ClipboardList },
+    { name: "Marks", path: "/admin/marks", icon: CheckSquare },
+    { name: "Student Attendance", path: "/admin/student-attendance", icon: Calendar },
+    { name: "Teacher Attendance", path: "/admin/teacher-attendance", icon: Calendar },
+    { name: "Student Leave", path: "/admin/student-leave", icon: FileText },
+    { name: "Teacher Leave", path: "/admin/teacher-leave", icon: FileText },
+    { name: "Users", path: "/admin/users", icon: Users },
+    { name: "Fees", path: "/admin/fees", icon: DollarSign },
+];
+
+const Sidebar = ({ open, setActive, setOpen, active }) => {
     const navigate = useNavigate();
+    return <div className={`${open ? "w-64" : "w-20"} bg-gray-900 text-white transition-all duration-300`}>
+        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+            <h1 className={`${!open && "hidden"} text-lg font-bold`}>Admin</h1>
+            <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
+        </div>
 
-    const menus = {
-        admin: [
-            { name: "Dashboard", path: "/admin" },
-            { name: "Students", path: "/admin/students" },
-            { name: "Teachers", path: "/admin/teachers" },
-            { name: "Classes", path: "/admin/classes" },
-            { name: "Assignment", path: "/admin/assignment" },
-            { name: "mark", path: "/admin/assignmentmark" },
-            { name: "StudentAttendence", path: "/admin/studentattendence" },
-            { name: "TeacherAttendence", path: "/admin/teacherattendence" },
-            { name: "Studentleave", path: "/admin/studentleave" },
-            { name: "Teacherleave", path: "/admin/teacherleave" },
-            { name: "User", path: "/admin/user" },
-            { name: "Fees", path: "/admin/fees" },
-
-        ],
-        teacher: [
-            { name: "Dashboard", path: "/teacher" },
-            { name: "Leave", path: "/teacher/leave" },
-            { name: "Attendance", path: "/teacher/attendance" },
-            { name: "Assignments", path: "/teacher/assignments" },
-        ],
-        student: [
-            { name: "Dashboard", path: "/student" },
-            { name: "Leave", path: "/student/leave" },
-            { name: "Results", path: "/student/results" },
-            { name: "Attendance", path: "/student/attendance" },
-        ],
-    };
-
-    return (
-        <>
-            {/* Overlay */}
-            {open && (
-                <div
-                    className="fixed inset-0 bg-black/40 md:hidden"
-                    onClick={() => setOpen(false)}
-                />
-            )}
-
-            <div
-                className={`fixed md:static z-50 w-64 h-full bg-white shadow transform transition-transform
-        ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
-            >
-                <div className="p-4 font-bold border-b">
-                    School System
-                </div>
-
-                <ul className="p-3 space-y-2">
-                    {menus[role]?.map((item) => (
-                        <li
-                            key={item.path}
-                            className="p-2 rounded hover:bg-gray-200 cursor-pointer"
-                            onClick={() => {
-                                navigate(item.path);
-                                setOpen(false);
-                            }}
-                        >
-                            {item.name}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
-    );
+        <ul className="mt-4">
+            {menuItems.map((item) => (
+                <li
+                    key={item.name}
+                    onClick={() => { setActive(item.name); navigate(item.path); }}
+                    className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-700 ${active === item.name && "bg-gray-700"}`}
+                >
+                    <item.icon size={20} />
+                    <span className={`${!open && "hidden"}`}>{item.name}</span>
+                </li>
+            ))}
+        </ul>
+    </div >
 }
+
+export default Sidebar

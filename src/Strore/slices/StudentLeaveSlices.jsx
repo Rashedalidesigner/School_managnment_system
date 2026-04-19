@@ -12,13 +12,17 @@ const StudentleaveSlice = createSlice({
             state.data = action.payload;
         },
         addStudentleave(state, action) {
-            state.push(action.payload);
+            state.data.push(action.payload);
         },
-        updateStudentleave(state, action) {
-            state(action.payload)
+        updateStudentleave: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
-        removeStudentleave(state, action) {
-            state(action.payload)
+        removeStudentleave: (state, action) => {
+            state.data = state.data.filter(item => item._id.toString() !== action.payload._id.toString());
         },
     }
 });

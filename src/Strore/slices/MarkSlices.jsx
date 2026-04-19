@@ -12,13 +12,22 @@ const MarkSlice = createSlice({
             state.data = action.payload;
         },
         addmark(state, action) {
-            state.push(action.payload);
+
+            state.data.push(action.payload);
         },
-        updatemark(state, action) {
-            state(action.payload)
+        updatemark: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
-        removemark(state, action) {
-            state(action.payload)
+
+        removemark: (state, action) => {
+            state.data = state.data.filter(item => {
+                console.log(item);
+                return item._id.toString() !== action.payload._id.toString();
+            });
         },
     }
 });

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
-import { getassignment } from "../../Strore/slices/AssignmentSlices";
+import { addassignment, getassignment, removeassignment, updateassignment } from "../../Strore/slices/AssignmentSlices";
 import { deletedata } from "../../components/deletedata";
 
 const AssignmentPage = () => {
@@ -22,28 +22,26 @@ const AssignmentPage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
+        title: "",
+        description: "",
         class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+        section: "",
+        subject: "",
+        assignmentDate: "",
+        dueDate: "",
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
+            title: "",
+            description: "",
             class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+            section: "",
+            subject: "",
+            assignmentDate: "",
+            dueDate: "",
         })
     }
     useEffect(() => {
@@ -62,14 +60,17 @@ const AssignmentPage = () => {
     const handlesubmit = () => {
         if (isEdite) {
             updatedata('Assignments', form.AssignmentId, form);
+            dispatch(updateassignment(form));
         } else {
             postdata('Assignments', form);
+            dispatch(addassignment(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("Assignments", item.ClassId);
+        const res = await deletedata("Assignments", item.AssignmentId);
+        dispatch(removeassignment(item));
         console.log(res);
     }
 
@@ -119,14 +120,14 @@ const AssignmentPage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Assignment Id</th>
-                            <th className="p-3 text-left">Name</th>
+                            {/* <th className="p-3 text-left">Assignment Id</th> */}
+                            <th className="p-3 text-left">Title</th>
+                            <th className="p-3 text-left">Description</th>
                             <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
+                            <th className="p-3 text-left">Section</th>
+                            <th className="p-3 text-left">Subject</th>
+                            <th className="p-3 text-left">Assignment Date</th>
+                            <th className="p-3 text-left">Due Date</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -134,14 +135,13 @@ const AssignmentPage = () => {
                     <tbody>
                         {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.AssignmentId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
+                                <td className="p-3 ">{item.title}</td>
+                                <td className="p-3">{item.description}</td>
                                 <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                <td className="p-3">{item.section}</td>
+                                <td className="p-3">{item.subject}</td>
+                                <td className="p-3">{item.assignmentDate}</td>
+                                <td className="p-3">{item.dueDate}</td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -170,20 +170,20 @@ const AssignmentPage = () => {
 
                         <div className="space-y-3">
                             <input
-                                value={form.AssignmentId}
-                                name="AssignmentId"
+                                value={form.title}
+                                name="title"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Assignment Id"
+                                placeholder="Assignment Title"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.description}
+                                name="description"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Assignment Name"
+                                placeholder="Assignment Description"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
@@ -197,45 +197,36 @@ const AssignmentPage = () => {
                             />
 
                             <input
-                                value={form.gender}
-                                name="gender"
+                                value={form.section}
+                                name="section"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Gender"
+                                placeholder="Section"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.address}
-                                name="address"
+                                value={form.subject}
+                                name="subject"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Address"
+                                placeholder="Subject"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
                             <input
-                                value={form.age}
-                                name="age"
+                                value={form.assignmentDate}
+                                name="assignmentDate"
                                 onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
+                                type="date"
+                                placeholder="Assignment Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
                             <input
-                                value={form.phone}
-                                name="phone"
+                                value={form.dueDate}
+                                name="dueDate"
                                 onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
+                                type="date"
+                                placeholder="Due Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 

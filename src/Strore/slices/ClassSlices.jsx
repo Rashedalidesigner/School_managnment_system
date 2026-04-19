@@ -12,15 +12,17 @@ const ClassSlice = createSlice({
             state.data = action.payload;
         },
         addclass(state, action) {
-            state.push(action.payload);
+            state.data.push(action.payload);
         },
-        updateclass(state, action) {
-            state(action.payload)
+        updateclass: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
         removeclass: (state, action) => {
-            const newdata = state.data.filter((item) => item.ClassId !== action.payload);
-            console.log(newdata, "data form slice");
-            state.data = newdata;
+            state.data = state.data.filter(item => item._id.toString() !== action.payload._id.toString());
         },
     }
 });

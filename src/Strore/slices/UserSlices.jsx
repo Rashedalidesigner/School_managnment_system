@@ -14,24 +14,20 @@ const userSlice = createSlice({
         },
 
         addUser: (state, action) => {
-            state.userdata.push(action.payload);
+            state.data.push(action.payload);
         },
 
         updateUser: (state, action) => {
-            const updatedUser = action.payload;
-
-            state.userdata = state.userdata.map(user =>
-                user.id === updatedUser.id ? updatedUser : user
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
             );
         },
 
         removeUser: (state, action) => {
-            const userId = action.payload;
-
-            state.userdata = state.userdata.filter(
-                user => user.id !== userId
-            );
-        }
+            state.data = state.data.filter(item => item._id.toString() !== action.payload);
+        },
     }
 });
 

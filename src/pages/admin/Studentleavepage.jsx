@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getStudentleave } from "../../Strore/slices/StudentLeaveSlices";
+import { addStudentleave, getStudentleave, removeStudentleave, updateStudentleave } from "../../Strore/slices/StudentLeaveSlices";
 import { deletedata } from "../../components/deletedata";
 
 const StudentleavePage = () => {
-    const fetchAssignments = async () => {
+    const fetchstudentleave = async () => {
         const backendapi = import.meta.env.VITE_BACKENDAPI;
         const studentleave = await axios.get(backendapi + 'studentLeave');
         console.log(studentleave)
@@ -24,33 +24,27 @@ const StudentleavePage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+        StudentId: "",
+        leaveStatus: "Pending",
+        reason: "",
+        date: "",
+        duration: ""
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+            StudentId: "",
+            leaveStatus: "",
+            reason: "",
+            date: "",
+            duration: ""
         })
     }
     useEffect(() => {
         try {
-            fetchAssignments();
+            fetchstudentleave();
         } catch (error) {
             console.log(error)
         }
@@ -63,15 +57,18 @@ const StudentleavePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('studentLeave', form.AssignmentId, form);
+            updatedata('studentLeave', form.StudentId, form);
+            dispatch(updateStudentleave(form));
         } else {
             postdata('studentLeave', form);
+            dispatch(addStudentleave(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("studentLeave", item.ClassId);
+        const res = await deletedata("studentLeave", item.StudentId);
+        dispatch(removeStudentleave(item));
         console.log(res);
     }
 
@@ -120,14 +117,11 @@ const StudentleavePage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Studentleave Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
+                            <th className="p-3 text-left">Student Id</th>
+                            <th className="p-3 text-left">Reason</th>
+                            <th className="p-3 text-left">Date</th>
+                            <th className="p-3 text-left">Duration</th>
+                            <th className="p-3 text-left">Leave Status</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -135,14 +129,19 @@ const StudentleavePage = () => {
                     <tbody>
                         {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.StudentleaveId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                <td className="p-3 font-medium">{item.StudentId}</td>
+                                <td className="p-3">{item.reason}</td>
+                                <td className="p-3">{item.date}</td>
+                                <td className="p-3">{item.duration}</td>
+                                <td className="p-3">
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.leaveStatus === "Approved" ? "bg-green-100 text-green-800" :
+                                        item.leaveStatus === "Rejected" ? "bg-red-100 text-red-800" :
+                                            "bg-yellow-100 text-yellow-800"
+                                        }`}>
+                                        {console.log(item.leaveStatus)}
+                                        {item.leaveStatus}
+                                    </span>
+                                </td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -171,72 +170,44 @@ const StudentleavePage = () => {
 
                         <div className="space-y-3">
                             <input
-                                value={form.StudentleaveId}
-                                name="StudentleaveId"
+                                value={form.StudentId}
+                                name="StudentId"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Studentleave Id"
+                                placeholder="Student Id"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+
+                            <select name="leaveStatus" id="leaveStatus" value={form.leaveStatus} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+
+                            <input
+                                value={form.reason}
+                                name="reason"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Reason"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.date}
+                                name="date"
                                 onChange={handleonChange}
-                                type="text"
-                                placeholder="Studentleave Name"
+                                type="date"
+                                placeholder="Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.class}
-                                name="class"
+                                value={form.duration}
+                                name="duration"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Class"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
-                            <input
-                                value={form.address}
-                                name="address"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.phone}
-                                name="phone"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
+                                placeholder="Duration"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 

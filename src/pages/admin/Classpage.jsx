@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
-import { getclass } from "../../Strore/slices/ClassSlices";
+import { addclass, getclass, removeclass, updateclass } from "../../Strore/slices/ClassSlices";
 import axios from "axios";
 import { deletedata } from "../../components/deletedata";
 
+// Classroom Management Page for Admin
+/*
+
+
+*/
 const ClassroomPage = () => {
-    const fetchAssignments = async () => {
+    const fetchclass = async () => {
         const backendapi = import.meta.env.VITE_BACKENDAPI;
         const classtdata = await axios.get(backendapi + 'classes');
-        // console.log(classtdata)
         dispatch(getclass(classtdata.data.data));
     };
     const dispatch = useDispatch();
@@ -23,33 +27,36 @@ const ClassroomPage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+
+        className: "",
+        section: "",
+        roomNumber: "",
+        classTeacher: "",
+        studentCount: "",
+        classSchedule: {},
+        seation: "",
     });
+
     const setdata = (data) => {
         setform(data);
     }
+
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+
+            className: "",
+            section: "",
+            roomNumber: "",
+            classTeacher: "",
+            studentCount: "",
+            classSchedule: "",
+            seation: "",
         })
     }
+
     useEffect(() => {
         try {
-            fetchAssignments();
+            fetchclass();
         } catch (error) {
             console.log(error)
         }
@@ -62,15 +69,18 @@ const ClassroomPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('classes', form.AssignmentId, form);
+            updatedata('classes', form.ClassId, form);
+            dispatch(updateclass(form));
         } else {
             postdata('classes', form);
+            dispatch(addclass(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
         const res = await deletedata("classes", item.ClassId);
+        dispatch(removeclass(item));
         console.log(res);
     }
 
@@ -120,14 +130,14 @@ const ClassroomPage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">classroom Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
+                            {/* <th className="p-3 text-left">Class Id</th> */}
+                            <th className="p-3 text-left">Class Name</th>
+                            <th className="p-3 text-left">Section</th>
+                            <th className="p-3 text-left">Room Number</th>
+                            <th className="p-3 text-left">Class Teacher</th>
+                            <th className="p-3 text-left">Student Count</th>
+                            <th className="p-3 text-left">Class Schedule</th>
+                            <th className="p-3 text-left">Seation</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -135,14 +145,14 @@ const ClassroomPage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.classroomId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                {/* <td className="p-3 font-medium">{item.ClassId}</td> */}
+                                <td className="p-3 ">{item.className}</td>
+                                <td className="p-3">{item.section}</td>
+                                <td className="p-3">{item.roomNumber}</td>
+                                <td className="p-3">{item.classTeacher}</td>
+                                <td className="p-3">{item.studentCount}</td>
+                                <td className="p-3">{JSON.stringify(item.classSchedule)}</td>
+                                <td className="p-3">{item.seation}</td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -170,76 +180,72 @@ const ClassroomPage = () => {
                         </h2>
 
                         <div className="space-y-3">
-                            <input
-                                value={form.classroomId}
-                                name="classroomId"
+                            {/* <input
+                                value={form.ClassId}
+                                name="ClassId"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="classroom Id"
+                                placeholder="Class Id"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            /> */}
+
+                            <input
+                                value={form.className}
+                                name="className"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Class Name"
+                                className="w-full px-4 py-2 border rounded-lg"
+                            />
+
+                            <select name="section" id="" value={form.section} onChange={handleonChange} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="">Select Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+
+                            <input
+                                value={form.roomNumber}
+                                name="roomNumber"
+                                onChange={handleonChange}
+                                type="text"
+                                placeholder="Room Number"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.classTeacher}
+                                name="classTeacher"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="classroom Name"
+                                placeholder="Class Teacher"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.class}
-                                name="class"
+                                value={form.studentCount}
+                                name="studentCount"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Class"
+                                placeholder="Student Count"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <select name="classSchedule" id="classSchedule" className="w-full px-4 py-2 border rounded-lg" value={form.classSchedule} onChange={handleonChange}>
+                                <option value="">Select Class Schedule</option>
+                                <option value="08:00-12:00_Morning">Morning</option>
+                                <option value="12:00-16:00_Afternoon">Afternoon</option>
+                            </select>
 
                             <input
-                                value={form.email}
-                                name="email"
+                                value={form.seation}
+                                name="seation"
                                 onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
+                                type="date"
+                                placeholder="Class Teacher"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
-
-                            <input
-                                value={form.address}
-                                name="address"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.phone}
-                                name="phone"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-
                         </div>
 
                         <div className="flex justify-end mt-5 space-x-2">

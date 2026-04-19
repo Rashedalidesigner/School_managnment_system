@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
 import axios from "axios";
-import { getFee } from "../../Strore/slices/FeeSlices";
+import { addFee, getFee, removeFee, updateFee } from "../../Strore/slices/FeeSlices";
 import { deletedata } from "../../components/deletedata";
 
 const FeePage = () => {
@@ -23,28 +23,22 @@ const FeePage = () => {
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
-        AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+        studentId: "",
+        date: "",
+        pamentmethod: "",
+        amount: "",
+        stutus: ""
     });
     const setdata = (data) => {
         setform(data);
     }
     const clearform = () => {
         setform({
-            AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+            studentId: "",
+            date: "",
+            pamentmethod: "",
+            amount: "",
+            stutus: ""
         })
     }
     useEffect(() => {
@@ -62,15 +56,18 @@ const FeePage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('fee', form.AssignmentId, form);
+            updatedata('fee', form.studentId, form);
+            dispatch(updateFee(form));
         } else {
             postdata('fee', form);
+            dispatch(addFee(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("fee", item.ClassId);
+        const res = await deletedata("fee", item.studentId);
+        dispatch(removeFee(item));
         console.log(res);
     }
 
@@ -119,14 +116,11 @@ const FeePage = () => {
 
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
-                            <th className="p-3 text-left">Fee Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
+                            <th className="p-3 text-left">Student Id</th>
+                            <th className="p-3 text-left">Date</th>
+                            <th className="p-3 text-left">Payment Method</th>
+                            <th className="p-3 text-left">Amount</th>
+                            <th className="p-3 text-left">Status</th>
                             <th className="p-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -134,14 +128,13 @@ const FeePage = () => {
                     <tbody>
                         {data && data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.FeeId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                <td className="p-3 font-medium">{item.studentId}</td>
+                                <td className="p-3 ">{item.date}</td>
+                                <td className="p-3">{item.pamentmethod}</td>
+                                <td className="p-3">{item.amount}</td>
+                                <td className={`p-3 ${item.stutus === 'Paid' ? 'text-red-500' : 'text-green-500'}`}>
+                                    {item.stutus}
+                                </td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -170,74 +163,47 @@ const FeePage = () => {
 
                         <div className="space-y-3">
                             <input
-                                value={form.FeeId}
-                                name="FeeId"
+                                value={form.studentId}
+                                name="studentId"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Fee Id"
+                                placeholder="Student Id"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.name}
-                                name="name"
+                                value={form.date}
+                                name="date"
                                 onChange={handleonChange}
-                                type="text"
-                                placeholder="Fee Name"
+                                type="date"
+                                placeholder="Date"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.class}
-                                name="class"
+                                value={form.pamentmethod}
+                                name="pamentmethod"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Class"
+                                placeholder="Payment Method"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
                             <input
-                                value={form.gender}
-                                name="gender"
+                                value={form.amount}
+                                name="amount"
                                 onChange={handleonChange}
                                 type="text"
-                                placeholder="Gender"
+                                placeholder="Amount"
                                 className="w-full px-4 py-2 border rounded-lg"
                             />
 
-                            <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <select name="stutus" id="status" onChange={handleonChange} value={form.status} className="w-full px-4 py-2 border rounded-lg">
+                                <option value="">Select Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="paid">Paid</option>
+                            </select>
 
-                            <input
-                                value={form.address}
-                                name="address"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.phone}
-                                name="phone"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
 
                         </div>
 

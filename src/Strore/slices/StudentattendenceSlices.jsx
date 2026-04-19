@@ -12,13 +12,17 @@ const StudnetattendenceSlice = createSlice({
             state.data = action.payload;
         },
         addStudnetattendence(state, action) {
-            state.push(action.payload);
+            state.data.push(action.payload);
         },
-        updateStudnetattendence(state, action) {
-            state(action.payload)
+        updateStudnetattendence: (state, action) => {
+            state.data = state.data.map(item =>
+                item._id.toString() === action.payload._id.toString()
+                    ? { ...item, ...action.payload }
+                    : item
+            );
         },
-        removeStudnetattendence(state, action) {
-            state(action.payload)
+        removeStudnetattendence: (state, action) => {
+            state.data = state.data.filter(item => item._id.toString() !== action.payload._id.toString());
         },
     }
 });

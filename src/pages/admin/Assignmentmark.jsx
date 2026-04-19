@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postdata } from "../../components/postdata";
 import { updatedata } from "../../components/update";
-import { getmark } from "../../Strore/slices/MarkSlices";
-// import { user } from "../../components/callalldata";
+import { addmark, getmark, removemark, updatemark } from "../../Strore/slices/MarkSlices";
 import axios from "axios";
 import { deletedata } from "../../components/deletedata";
+import Id from "../../components/Id";
 
 const AssignmentmarkPage = () => {
-    const fetchAssignments = async () => {
+    const fetchAssignmentsmark = async () => {
         const backendapi = import.meta.env.VITE_BACKENDAPI;
         const asiignmentdata = await axios.get(backendapi + 'assignmentmark');
         dispatch(getmark(asiignmentdata.data.data));
@@ -20,18 +20,12 @@ const AssignmentmarkPage = () => {
         return state.mark.data;
     })
     const data = assignmentmarksdata;
-    console.log(data)
     const [open, setOpen] = useState(false);
     const [isEdite, setEdite] = useState(false);
     const [form, setform] = useState({
         AssignmentId: "",
-        name: "",
-        age: "",
-        class: "",
-        gender: "",
-        phone: "",
-        email: "",
-        address: "",
+        StudentId: "",
+        marks: "",
     });
     const setdata = (data) => {
         setform(data);
@@ -39,18 +33,13 @@ const AssignmentmarkPage = () => {
     const clearform = () => {
         setform({
             AssignmentId: "",
-            name: "",
-            age: "",
-            class: "",
-            gender: "",
-            phone: "",
-            email: "",
-            address: "",
+            StudentId: "",
+            marks: "",
         })
     }
     useEffect(() => {
         try {
-            fetchAssignments();
+            fetchAssignmentsmark();
         } catch (error) {
             console.log(error)
         }
@@ -63,15 +52,19 @@ const AssignmentmarkPage = () => {
     }
     const handlesubmit = () => {
         if (isEdite) {
-            updatedata('Assignments', form.AssignmentId, form);
+            updatedata('assignmentmark', form.AssignmentId, form);
+            dispatch(updatemark(form));
         } else {
-            postdata('Assignments', form);
+            postdata('assignmentmark', form);
+            dispatch(addmark(form));
         }
         clearform();
     };
 
     const handledelte = async (item) => {
-        const res = await deletedata("classes", item.ClassId);
+        console.log(item.StudentId);
+        const res = await deletedata("assignmentmark", item.StudentId);
+        dispatch(removemark(item));
         console.log(res);
     }
 
@@ -121,28 +114,17 @@ const AssignmentmarkPage = () => {
                     <thead className="bg-gray-100 text-gray-600">
                         <tr>
                             <th className="p-3 text-left">Assignmentmark Id</th>
-                            <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Class</th>
-                            <th>Gender</th>
-                            <th className="p-3 text-left">Email</th>
-                            <th className="p-3 text-left">Address</th>
-                            <th className="p-3 text-left">Age</th>
-                            <th className="p-3 text-left">Phone</th>
-                            <th className="p-3 text-left">Actions</th>
+                            <th className="p-3 text-left">Student Id</th>
+                            <th className="p-3 text-left">Mark</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {data.map((item, index) => {
                             return <tr key={index} className="border-b hover:bg-gray-50">
-                                <td>{item.AssignmentmarkId}</td>
-                                <td className="p-3 font-medium">{item.name}</td>
-                                <td className="p-3">{item.class}</td>
-                                <td className="p-3">{item.gender}</td>
-                                <td className="p-3">{item.email}</td>
-                                <td className="p-3">{item.address}</td>
-                                <td className="p-3">{item.age}</td>
-                                <td className="p-3">{item.phone}</td>
+                                <td className="p-3 font-medium">{item.AssignmentId}</td>
+                                <td className="p-3 ">{item.StudentId}</td>
+                                <td className="p-3">{item.marks}</td>
                                 <td className="p-3 space-x-2">
                                     <button className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg" onClick={() => { setOpen(true); setEdite(true); setdata(item) }}>
                                         Edit
@@ -151,117 +133,72 @@ const AssignmentmarkPage = () => {
                                         Delete
                                     </button>
                                 </td>
-
                             </tr>
                         })}
                     </tbody>
-
                 </table>
-            </div>
+            </div >
 
             {/* Modal */}
-            {open && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+            {
+                open && (
+                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
 
-                    <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg">
+                        <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-lg">
 
-                        <h2 className="text-lg font-semibold mb-4">
-                            {isEdite ? "Edite" : "Add"} Assignmentmark
-                        </h2>
+                            <h2 className="text-lg font-semibold mb-4">
+                                {isEdite ? "Edite" : "Add"} Assignmentmark
+                            </h2>
 
-                        <div className="space-y-3">
-                            <input
-                                value={form.AssignmentmarkId}
-                                name="AssignmentmarkId"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Assignmentmark Id"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            <div className="space-y-3">
+                                <input
+                                    value={form.AssignmentId}
+                                    name="AssignmentId"
+                                    onChange={handleonChange}
+                                    type="text"
+                                    placeholder="Assignmentmark Id"
+                                    className="w-full px-4 py-2 border rounded-lg"
+                                />
 
-                            <input
-                                value={form.name}
-                                name="name"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Assignmentmark Name"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                                <input
+                                    value={form.StudentId}
+                                    name="StudentId"
+                                    onChange={handleonChange}
+                                    type="text"
+                                    placeholder="Student Id"
+                                    className="w-full px-4 py-2 border rounded-lg"
+                                />
 
-                            <input
-                                value={form.class}
-                                name="class"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Class"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                                <input
+                                    value={form.marks}
+                                    name="marks"
+                                    onChange={handleonChange}
+                                    type="text"
+                                    placeholder="Mark"
+                                    className="w-full px-4 py-2 border rounded-lg"
+                                />
+                            </div>
+                            <div className="flex justify-end mt-5 space-x-2">
 
-                            <input
-                                value={form.gender}
-                                name="gender"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Gender"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                                <button
+                                    onClick={() => { setOpen(false); setEdite(false); clearform() }}
+                                    className="px-4 py-2 border rounded-lg"
+                                >
+                                    Cancel
+                                </button>
 
-                            <input
-                                value={form.email}
-                                name="email"
-                                onChange={handleonChange}
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                                <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg" onClick={handlesubmit}>
+                                    Save
+                                </button>
 
-                            <input
-                                value={form.address}
-                                name="address"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Address"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.age}
-                                name="age"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Age"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                            <input
-                                value={form.phone}
-                                name="phone"
-                                onChange={handleonChange}
-                                type="text"
-                                placeholder="Phone"
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
+                            </div>
 
                         </div>
-
-                        <div className="flex justify-end mt-5 space-x-2">
-
-                            <button
-                                onClick={() => { setOpen(false); setEdite(false); clearform() }}
-                                className="px-4 py-2 border rounded-lg"
-                            >
-                                Cancel
-                            </button>
-
-                            <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg" onClick={handlesubmit}>
-                                Save
-                            </button>
-
-                        </div>
-
                     </div>
-                </div>
-            )}
+                )
+            }
 
-        </div>
+        </div >
 
     );
 };

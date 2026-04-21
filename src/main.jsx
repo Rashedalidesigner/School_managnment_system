@@ -5,12 +5,16 @@ import App from './App.jsx'
 import { Provider } from 'react-redux';
 import store from './Strore/store.js'
 import { StrictMode } from 'react';
+import { HashRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <HashRouter basename="/School_managnment_system">
+    <Provider store={store}>
+      <App />
+    </Provider>,
+  </HashRouter>
+  
   {/* </StrictMode> */ }
 
 )

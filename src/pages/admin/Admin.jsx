@@ -25,15 +25,8 @@ export default function AdminDashboard() {
     const dispatch = useDispatch();
     const data = useSelector((state) => state);
     const [active, setActive] = useState("Dashboard");
-    const [admin, setAdmin] = useState(false);
     const location = useLocation();
-    useEffect(() => {
-        if (location.pathname === "/admin") {
-            setAdmin(true);
-        } else {
-            setAdmin(false);
-        }
-    }, [location]);
+
     const [open, setOpen] = useState(true);
     const fetchdata = async () => {
         const backendapi = import.meta.env.VITE_BACKENDAPI;
@@ -77,7 +70,9 @@ export default function AdminDashboard() {
             {/* Main Content */}
             <div className="flex-1 p-6 overflow-y-auto">
                 <h1 className="text-2xl font-bold mb-4">{active}</h1>
-                <section className={active ? "" : "hidden"}>
+
+
+                {/* <section className={active ? "" : "hidden"}>
                     <div className="p-6 bg-gray-50 min-h-screen">
 
                         <h1 className="text-2xl font-semibold mb-6">
@@ -141,11 +136,9 @@ export default function AdminDashboard() {
                         </div>
 
                     </div>
-                </section>
+                </section> */}
                 <div className="bg-white p-6 rounded-2xl shadow">
                     <h1 className="text-xl text-center">Admin Dashboard</h1>
-
-
                     <Outlet />
                 </div>
             </div >

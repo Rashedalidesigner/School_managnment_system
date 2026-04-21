@@ -34,18 +34,18 @@ const App = () => {
         <Route path="/" element={<Navigate to="/login" />} />
 
         {/* 🔐 Protected Routes */}
-        <Route path="admin" element={<AdminDashboard />} >
-          <Route path="students" element={<StudentPage />} />
-          <Route path="teachers" element={< TeacherPage />} />
-          <Route path="classes" element={<ClassroomPage />} />
-          <Route path="assignments" element={<AssignmentPage />} />
-          <Route path="student-attendance" element={<StudentattendencePage />} />
-          <Route path="teacher-attendance" element={<TeacherattendencePage />} />
-          <Route path="student-leave" element={<StudentleavePage />} />
-          <Route path="teacher-leave" element={<TeacherleavePage />} />
-          <Route path="users" element={<UserPage />} />
-          <Route path="marks" element={<AssignmentmarkPage />} />
-          <Route path="fees" element={<FeePage />} />
+        <Route path="/admin" element={<AdminDashboard />} >
+          <Route path="/students" element={<StudentPage />} />
+          <Route path="/teachers" element={< TeacherPage />} />
+          <Route path="/classes" element={<ClassroomPage />} />
+          <Route path="/assignments" element={<AssignmentPage />} />
+          <Route path="/student-attendance" element={<StudentattendencePage />} />
+          <Route path="/teacher-attendance" element={<TeacherattendencePage />} />
+          <Route path="/student-leave" element={<StudentleavePage />} />
+          <Route path="/teacher-leave" element={<TeacherleavePage />} />
+          <Route path="/users" element={<UserPage />} />
+          <Route path="/marks" element={<AssignmentmarkPage />} />
+          <Route path="/fees" element={<FeePage />} />
         </Route>
 
         <Route

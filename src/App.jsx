@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AdminDashboard from "./pages/admin/Admin";
 import TeacherDashboard from "./pages/teacher/Teacher";
 import StudentDashboard from "./pages/student/Student";
@@ -25,51 +25,50 @@ const App = () => {
   // useCallalldata();
 
   return (
-    <BrowserRouter >
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
 
-        {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/admin" />} />
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        {/* 🔐 Protected Routes */}
-        <Route path="/admin" element={<AdminDashboard />} >
-          <Route path="students" element={<StudentPage />} />
-          <Route path="teachers" element={< TeacherPage />} />
-          <Route path="classes" element={<ClassroomPage />} />
-          <Route path="assignments" element={<AssignmentPage />} />
-          <Route path="student-attendance" element={<StudentattendencePage />} />
-          <Route path="teacher-attendance" element={<TeacherattendencePage />} />
-          <Route path="student-leave" element={<StudentleavePage />} />
-          <Route path="teacher-leave" element={<TeacherleavePage />} />
-          <Route path="users" element={<UserPage />} />
-          <Route path="marks" element={<AssignmentmarkPage />} />
-          <Route path="fees" element={<FeePage />} />
-        </Route>
+      {/* Default redirect */}
+      <Route path="/" element={<Navigate to="/admin" />} />
 
-        <Route
-          path="/teachers"
-          element={
-            // <ProtectedRoute>
-            <TeacherDashboard />
-            // </ProtectedRoute>
-          }
-        />
+      {/* 🔐 Protected Routes */}
+      <Route path="/admin" element={<AdminDashboard />} >
+        <Route path="students" element={<StudentPage />} />
+        <Route path="teachers" element={< TeacherPage />} />
+        <Route path="classes" element={<ClassroomPage />} />
+        <Route path="assignments" element={<AssignmentPage />} />
+        <Route path="student-attendance" element={<StudentattendencePage />} />
+        <Route path="teacher-attendance" element={<TeacherattendencePage />} />
+        <Route path="student-leave" element={<StudentleavePage />} />
+        <Route path="teacher-leave" element={<TeacherleavePage />} />
+        <Route path="users" element={<UserPage />} />
+        <Route path="marks" element={<AssignmentmarkPage />} />
+        <Route path="fees" element={<FeePage />} />
+      </Route>
 
-        <Route
-          path="/students"
-          element={
-            // <ProtectedRoute role="admin">
-            <StudentDashboard />
+      <Route
+        path="/teachers"
+        element={
+          // <ProtectedRoute>
+          <TeacherDashboard />
+          // </ProtectedRoute>
+        }
+      />
 
-            // </ProtectedRoute>
-          }
-        />
+      <Route
+        path="/students"
+        element={
+          // <ProtectedRoute role="admin">
+          <StudentDashboard />
+
+          // </ProtectedRoute>
+        }
+      />
 
 
-      </Routes>
-    </BrowserRouter>
+    </Routes>
   );
 }
 

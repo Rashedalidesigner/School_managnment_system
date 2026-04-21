@@ -25,7 +25,7 @@ const App = () => {
   // useCallalldata();
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/School_managnment_system">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

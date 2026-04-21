@@ -1,0 +1,331 @@
+[
+    {
+        "teacherId": "T001",
+        "date": "2026-03-01",
+        "status": "Present",
+        "checkIn": "09:00",
+        "checkOut": "15:00"
+    },
+    {
+        "teacherId": "T002",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:05",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T003",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "08:55",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Late",
+                "checkIn": "09:20",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T004",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Late",
+                "checkIn": "09:40",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            }
+        ]
+    },
+    {
+        "teacherId": "T005",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:10",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Late",
+                "checkIn": "09:25",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T006",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T007",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Late",
+                "checkIn": "09:35",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T008",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Late",
+                "checkIn": "09:30",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T009",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Late",
+                "checkIn": "09:45",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            }
+        ]
+    },
+    {
+        "teacherId": "T010",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Late",
+                "checkIn": "09:20",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T011",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "08:50",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Late",
+                "checkIn": "09:25",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T012",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:05",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T013",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Late",
+                "checkIn": "09:30",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T014",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Late",
+                "checkIn": "09:35",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Absent",
+                "checkIn": null,
+                "checkOut": null
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            }
+        ]
+    },
+    {
+        "teacherId": "T015",
+        "records": [
+            {
+                "date": "2026-03-01",
+                "status": "Present",
+                "checkIn": "09:00",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-02",
+                "status": "Present",
+                "checkIn": "09:10",
+                "checkOut": "15:00"
+            },
+            {
+                "date": "2026-03-03",
+                "status": "Late",
+                "checkIn": "09:20",
+                "checkOut": "15:00"
+            }
+        ]
+    }
+]

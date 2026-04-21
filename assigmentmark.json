@@ -1,0 +1,152 @@
+[
+    {
+        "assignmentId": "A001",
+        "studentId": "S001",
+        "marksObtained": 95
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S002",
+        "marksObtained": 88
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S003",
+        "marksObtained": 92
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S004",
+        "marksObtained": 90
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S005",
+        "marksObtained": 85
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S006",
+        "marksObtained": 78
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S007",
+        "marksObtained": 80
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S008",
+        "marksObtained": 87
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S009",
+        "marksObtained": 91
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S010",
+        "marksObtained": 89
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S011",
+        "marksObtained": 93
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S012",
+        "marksObtained": 77
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S013",
+        "marksObtained": 82
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S014",
+        "marksObtained": 88
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S015",
+        "marksObtained": 90
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S016",
+        "marksObtained": 85
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S017",
+        "marksObtained": 79
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S018",
+        "marksObtained": 92
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S019",
+        "marksObtained": 81
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S020",
+        "marksObtained": 86
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S021",
+        "marksObtained": 88
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S022",
+        "marksObtained": 90
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S023",
+        "marksObtained": 84
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S024",
+        "marksObtained": 87
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S025",
+        "marksObtained": 91
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S026",
+        "marksObtained": 83
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S027",
+        "marksObtained": 79
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S028",
+        "marksObtained": 85
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S029",
+        "marksObtained": 90
+    },
+    {
+        "assignmentId": "A001",
+        "studentId": "S030",
+        "marksObtained": 88
+    }
+]

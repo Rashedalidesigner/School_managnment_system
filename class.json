@@ -1,0 +1,242 @@
+[
+    {
+        "classId": "C001",
+        "className": "Class 1",
+        "section": "A",
+        "roomNumber": "101",
+        "classTeacher": "Rashed Ali",
+        "studentCount": 30,
+        "classSchedule": {
+            "Monday": "8:00 AM - 9:00 AM",
+            "Tuesday": "8:00 AM - 9:00 AM",
+            "Wednesday": "8:00 AM - 9:00 AM",
+            "Thursday": "8:00 AM - 9:00 AM",
+            "Friday": "8:00 AM - 9:00 AM"
+        }
+    },
+    {
+        "classId": "C001",
+        "className": "Class 1",
+        "section": "B",
+        "roomNumber": "101",
+        "classTeacher": "Rashed Ali",
+        "studentCount": 30,
+        "classSchedule": {
+            "Monday": "9:00 AM - 10:00 AM",
+            "Tuesday": "9:00 AM - 10:00 AM",
+            "Wednesday": "9:00 AM - 10:00 AM",
+            "Thursday": "9:00 AM - 10:00 AM",
+            "Friday": "9:00 AM - 10:00 AM"
+        }
+    },
+    {
+        "classId": "C002",
+        "className": "Class 2",
+        "section": "A",
+        "roomNumber": "102",
+        "classTeacher": "Sadia Islam",
+        "studentCount": 28,
+        "classSchedule": {
+            "Monday": "10:00 AM - 11:00 AM",
+            "Tuesday": "10:00 AM - 11:00 AM",
+            "Wednesday": "10:00 AM - 11:00 AM",
+            "Thursday": "10:00 AM - 11:00 AM",
+            "Friday": "10:00 AM - 11:00 AM"
+        }
+    },
+    {
+        "classId": "C003",
+        "className": "Class 3",
+        "section": "B",
+        "roomNumber": "103",
+        "classTeacher": "Karim Hossain",
+        "studentCount": 32,
+        "classSchedule": {
+            "Monday": "11:00 AM - 12:00 PM",
+            "Tuesday": "11:00 AM - 12:00 PM",
+            "Wednesday": "11:00 AM - 12:00 PM",
+            "Thursday": "11:00 AM - 12:00 PM",
+            "Friday": "11:00 AM - 12:00 PM"
+        }
+    },
+    {
+        "classId": "C004",
+        "className": "Class 4",
+        "section": "A",
+        "roomNumber": "104",
+        "classTeacher": "Nusrat Jahan",
+        "studentCount": 29,
+        "classSchedule": {
+            "Monday": "12:00 PM - 1:00 PM",
+            "Tuesday": "12:00 PM - 1:00 PM",
+            "Wednesday": "12:00 PM - 1:00 PM",
+            "Thursday": "12:00 PM - 1:00 PM",
+            "Friday": "12:00 PM - 1:00 PM"
+        }
+    },
+    {
+        "classId": "C005",
+        "className": "Class 5",
+        "section": "B",
+        "roomNumber": "105",
+        "classTeacher": "Fahim Ahmed",
+        "studentCount": 31,
+        "classSchedule": {
+            "Monday": "1:00 PM - 2:00 PM",
+            "Tuesday": "1:00 PM - 2:00 PM",
+            "Wednesday": "1:00 PM - 2:00 PM",
+            "Thursday": "1:00 PM - 2:00 PM",
+            "Friday": "1:00 PM - 2:00 PM"
+        }
+    },
+    {
+        "classId": "C006",
+        "className": "Class 6",
+        "section": "A",
+        "roomNumber": "201",
+        "classTeacher": "Mim Akter",
+        "studentCount": 35,
+        "classSchedule": {
+            "Monday": "2:00 PM - 3:00 PM",
+            "Tuesday": "2:00 PM - 3:00 PM",
+            "Wednesday": "2:00 PM - 3:00 PM",
+            "Thursday": "2:00 PM - 3:00 PM",
+            "Friday": "2:00 PM - 3:00 PM"
+        }
+    },
+    {
+        "classId": "C007",
+        "className": "Class 7",
+        "section": "B",
+        "roomNumber": "202",
+        "classTeacher": "Jahid Hasan",
+        "studentCount": 33,
+        "classSchedule": {
+            "Monday": "3:00 PM - 4:00 PM",
+            "Tuesday": "3:00 PM - 4:00 PM",
+            "Wednesday": "3:00 PM - 4:00 PM",
+            "Thursday": "3:00 PM - 4:00 PM",
+            "Friday": "3:00 PM - 4:00 PM"
+        }
+    },
+    {
+        "classId": "C008",
+        "className": "Class 8",
+        "section": "A",
+        "roomNumber": "203",
+        "classTeacher": "Salma Begum",
+        "studentCount": 34,
+        "classSchedule": {
+            "Monday": "4:00 PM - 5:00 PM",
+            "Tuesday": "4:00 PM - 5:00 PM",
+            "Wednesday": "4:00 PM - 5:00 PM",
+            "Thursday": "4:00 PM - 5:00 PM",
+            "Friday": "4:00 PM - 5:00 PM"
+        }
+    },
+    {
+        "classId": "C009",
+        "className": "Class 9",
+        "section": "Science",
+        "roomNumber": "204",
+        "classTeacher": "Rakib Khan",
+        "studentCount": 36,
+        "classSchedule": {
+            "Monday": "5:00 PM - 6:00 PM",
+            "Tuesday": "5:00 PM - 6:00 PM",
+            "Wednesday": "5:00 PM - 6:00 PM",
+            "Thursday": "5:00 PM - 6:00 PM",
+            "Friday": "5:00 PM - 6:00 PM"
+        }
+    },
+    {
+        "classId": "C010",
+        "className": "Class 9",
+        "section": "Commerce",
+        "roomNumber": "205",
+        "classTeacher": "Shila Rahman",
+        "studentCount": 30,
+        "classSchedule": {
+            "Monday": "6:00 PM - 7:00 PM",
+            "Tuesday": "6:00 PM - 7:00 PM",
+            "Wednesday": "6:00 PM - 7:00 PM",
+            "Thursday": "6:00 PM - 7:00 PM",
+            "Friday": "6:00 PM - 7:00 PM"
+        }
+    },
+    {
+        "classId": "C011",
+        "className": "Class 10",
+        "section": "Science",
+        "roomNumber": "206",
+        "classTeacher": "Tanvir Ahmed",
+        "studentCount": 38,
+        "classSchedule": {
+            "Monday": "7:00 PM - 8:00 PM",
+            "Tuesday": "7:00 PM - 8:00 PM",
+            "Wednesday": "7:00 PM - 8:00 PM",
+            "Thursday": "7:00 PM - 8:00 PM",
+            "Friday": "7:00 PM - 8:00 PM"
+        }
+    },
+    {
+        "classId": "C012",
+        "className": "Class 10",
+        "section": "Arts",
+        "roomNumber": "207",
+        "classTeacher": "Farzana Sultana",
+        "studentCount": 27,
+        "classSchedule": {
+            "Monday": "8:00 PM - 9:00 PM",
+            "Tuesday": "8:00 PM - 9:00 PM",
+            "Wednesday": "8:00 PM - 9:00 PM",
+            "Thursday": "8:00 PM - 9:00 PM",
+            "Friday": "8:00 PM - 9:00 PM"
+        }
+    },
+    {
+        "classId": "C013",
+        "className": "Class 11",
+        "section": "Science",
+        "roomNumber": "301",
+        "classTeacher": "Imran Haque",
+        "studentCount": 40,
+        "classSchedule": {
+            "Monday": "9:00 PM - 10:00 PM",
+            "Tuesday": "9:00 PM - 10:00 PM",
+            "Wednesday": "9:00 PM - 10:00 PM",
+            "Thursday": "9:00 PM - 10:00 PM",
+            "Friday": "9:00 PM - 10:00 PM"
+        }
+    },
+    {
+        "classId": "C014",
+        "className": "Class 12",
+        "section": "Commerce",
+        "roomNumber": "302",
+        "classTeacher": "Rina Das",
+        "studentCount": 37,
+        "classSchedule": {
+            "Monday": "10:00 PM - 11:00 PM",
+            "Tuesday": "10:00 PM - 11:00 PM",
+            "Wednesday": "10:00 PM - 11:00 PM",
+            "Thursday": "10:00 PM - 11:00 PM",
+            "Friday": "10:00 PM - 11:00 PM"
+        }
+    },
+    {
+        "classId": "C015",
+        "className": "Class 12",
+        "section": "Arts",
+        "roomNumber": "303",
+        "classTeacher": "Sabbir Uddin",
+        "studentCount": 35,
+        "classSchedule": {
+            "Monday": "11:00 PM - 12:00 AM",
+            "Tuesday": "11:00 PM - 12:00 AM",
+            "Wednesday": "11:00 PM - 12:00 AM",
+            "Thursday": "11:00 PM - 12:00 AM",
+            "Friday": "11:00 PM - 12:00 AM"
+        }
+    }
+]

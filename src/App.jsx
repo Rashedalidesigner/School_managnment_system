@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
         {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/admin" />} />
 
         {/* 🔐 Protected Routes */}
         <Route path="/admin" element={<AdminDashboard />} >

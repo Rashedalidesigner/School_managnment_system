@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { postdata } from "./postdata";
+// import { set } from "mongoose";
 
 const Register = () => {
+    const [formData, setFormData] = useState({
+        username: "",
+        useremail: "",
+        phone: "",
+        password: "",
+    });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await postdata('users', formData);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+        setFormData({
+            username: "",
+            useremail: "",
+            phone: "",
+            password: "",
+        });
+    }
+
+
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
@@ -16,34 +46,42 @@ const Register = () => {
                 </p>
 
                 {/* Form */}
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
 
                     <input
                         type="text"
-                        placeholder="Full Name"
+                        placeholder="Username"
                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
                     />
 
                     <input
                         type="email"
                         placeholder="Email"
                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                        name="useremail"
+                        value={formData.useremail}
+                        onChange={handleChange}
                     />
 
                     <input
+                        name="phone"
+                        type="text"
+                        placeholder="Phone"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                        value={formData.phone}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="password"
                         type="password"
                         placeholder="Password"
                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                        value={formData.password}
+                        onChange={handleChange}
                     />
-
-                    <select
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                    >
-                        <option value="">Select Role</option>
-                        <option value="admin">Admin</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="student">Student</option>
-                    </select>
 
                     <button
                         type="submit"

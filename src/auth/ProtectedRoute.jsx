@@ -1,21 +1,18 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-// role is optional (for role-based access)
-const ProtectedRoute = ({ children, role }) => {
+export const ProtectedRoute = ({ allowedRoles }) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
-
+    // ❌ Not logged in
     if (!user) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/login" replace />;
     }
 
-
-    if (role && user.role !== role) {
-        return <Navigate to="/login" />;
+    // ❌ Role not allowed
+    if (allowedRoles && !allowedRoles.includes(user.usertype)) {
+        return <Navigate to="/login" replace />;
     }
 
-    return children;
+    // ✅ Allowed
+    return <Outlet />;
 };
-
-export default ProtectedRoute;

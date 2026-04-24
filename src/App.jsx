@@ -1,11 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminDashboard from "./pages/admin/Admin";
 import TeacherDashboard from "./pages/teacher/Teacher";
-import StudentDashboard from "./pages/student/Student";
+import StudentDashboard from "./pages/student/Student.jsx";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ProtectedRoute from "./auth/ProtectedRoute";
-// import useCallalldata from "./components/callalldata";
+import { ProtectedRoute } from "./auth/ProtectedRoute";
 import StudentPage from "./pages/admin/Studentpage";
 import TeacherattendencePage from "./pages/admin/Teacherattendencepage";
 import ClassroomPage from "./pages/admin/Classpage";
@@ -17,9 +16,6 @@ import UserPage from "./pages/admin/Userpage";
 import AssignmentmarkPage from "./pages/admin/Assignmentmark";
 import FeePage from "./pages/admin/Feepage";
 import TeacherPage from "./pages/admin/Teacherpage";
-
-
-
 
 const App = () => {
   // useCallalldata();
@@ -33,42 +29,40 @@ const App = () => {
       {/* Default redirect */}
       <Route path="/" element={<Navigate to="/login" />} />
 
-      {/* 🔐 Protected Routes */}
-      <Route path="/admin" element={<AdminDashboard />} >
-        <Route path="students" element={<StudentPage />} />
-        <Route path="teachers" element={< TeacherPage />} />
-        <Route path="classes" element={<ClassroomPage />} />
-        <Route path="assignments" element={<AssignmentPage />} />
-        <Route path="student-attendance" element={<StudentattendencePage />} />
-        <Route path="teacher-attendance" element={<TeacherattendencePage />} />
-        <Route path="student-leave" element={<StudentleavePage />} />
-        <Route path="teacher-leave" element={<TeacherleavePage />} />
-        <Route path="users" element={<UserPage />} />
-        <Route path="marks" element={<AssignmentmarkPage />} />
-        <Route path="fees" element={<FeePage />} />
-      </Route>
+      /// Protected Routes
+      <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="students" element={<StudentPage />} />
+          <Route path="teachers" element={<TeacherPage />} />
+          <Route path="classes" element={<ClassroomPage />} />
+          <Route path="assignments" element={<AssignmentPage />} />
+          <Route path="student-attendance" element={<StudentattendencePage />} />
+          <Route path="teacher-attendance" element={<TeacherattendencePage />} />
+          <Route path="student-leave" element={<StudentleavePage />} />
+          <Route path="teacher-leave" element={<TeacherleavePage />} />
+          <Route path="users" element={<UserPage />} />
+          <Route path="marks" element={<AssignmentmarkPage />} />
+          <Route path="fees" element={<FeePage />} />
+        </Route>
+      </Route >
+      <Route element={<ProtectedRoute allowedRoles={["Teacher"]} />}>
+        <Route path="/teachers" element={<TeacherDashboard />}>
+          <Route path="students" element={<StudentPage />} />
+          <Route path="teachers" element={<TeacherPage />} />
+          <Route path="assignments" element={<AssignmentPage />} />
+          <Route path="student-attendance" element={<StudentattendencePage />} />
+          <Route path="marks" element={<AssignmentmarkPage />} />
+          <Route path="fees" element={<FeePage />} />
+        </Route>
+      </Route >
+      <Route element={<ProtectedRoute allowedRoles={["Student"]} />}>
+        <Route path="/students" element={<StudentDashboard />}>
+          <Route path="classes" element={<ClassroomPage />} />
+          <Route path="assignments" element={<AssignmentPage />} />
+        </Route>
+      </Route >
 
-      <Route
-        path="/teachers"
-        element={
-          // <ProtectedRoute>
-          <TeacherDashboard />
-          // </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/students"
-        element={
-          // <ProtectedRoute role="admin">
-          <StudentDashboard />
-
-          // </ProtectedRoute>
-        }
-      />
-
-
-    </Routes>
+    </Routes >
   );
 }
 

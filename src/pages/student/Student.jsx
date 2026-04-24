@@ -1,11 +1,15 @@
-import Layout from "../../components/Layout";
+// import Layout from "../../components/Layout";
+
+import { useState } from "react";
+import Sidebar from "../../components/Sidebar";
 
 export default function StudentDashboard() {
+    const [active, setActive] = useState("Student");
+    const [open, setOpen] = useState(true);
     return (
-        <Layout role="student">
-            <div className="bg-white p-4 rounded shadow">
-                Student Dashboard 🎓
-            </div>
-        </Layout>
+        <div className="container height-screen">
+            <Sidebar open={open} setActive={setActive} setOpen={setOpen} active={active} className="fixed w-64 left-0 height-screen"
+            />
+        </div>
     );
 }

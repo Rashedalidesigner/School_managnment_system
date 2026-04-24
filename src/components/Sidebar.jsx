@@ -17,27 +17,88 @@ const menuItems = [
     { name: "Fees", path: "/admin/fees", icon: DollarSign },
 ];
 
-const Sidebar = ({ open, setActive, setOpen, active }) => {
+const teacherMenuItems = [
+    { name: "Students", path: "/teachers/students", icon: Users },
+    { name: "Assignments", path: "/teachers/assignments", icon: ClipboardList },
+    { name: "Marks", path: "/teachers/marks", icon: CheckSquare },
+    { name: "Fees", path: "/teachers/fees", icon: DollarSign },
+];
+
+const studentMenuItems = [
+    { name: "Classes", path: "/students/classes", icon: BookOpen },
+    { name: "Assignments", path: "/students/assignments", icon: ClipboardList },
+    { name: "Marks", path: "/students/marks", icon: CheckSquare },
+    { name: "Fees", path: "/students/fees", icon: DollarSign },
+];
+
+const Sidebar = ({ open, setOpen, active }) => {
     const navigate = useNavigate();
-    return <div className={`${open ? "w-64" : "w-20"} bg-gray-900 text-white transition-all duration-300`}>
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-            <h1 className={`${!open && "hidden"} text-lg font-bold`}>Admin</h1>
-            <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
-        </div>
+    console.log(open, active);
+    if (active === "Admin") {
+        return (
+            <div className={`bg-gray-900 text-white transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
+                <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                    <h1 className={`${!open && "hidden"} text-lg font-bold`}>Admin</h1>
+                    <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
+                </div>
 
-        <ul className="mt-4">
-            {menuItems.map((item) => (
-                <li
-                    key={item.name}
-                    onClick={() => { setActive(item.name); navigate(item.path); }}
-                    className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-700 ${active === item.name && "bg-gray-700"}`}
-                >
-                    <item.icon size={20} />
-                    <span className={`${!open && "hidden"}`}>{item.name}</span>
-                </li>
-            ))}
-        </ul>
-    </div >
-}
+                <ul className="mt-4">
+                    {menuItems.map((item) => (
+                        <li
+                            key={item.name}
+                            onClick={() => { navigate(item.path); }}
+                            className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-700 ${active === item.name && "bg-gray-700"}`}
+                        >
+                            <item.icon size={20} />
+                            <span className={`${!open && "hidden"}`}>{item.name}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    } else if (active === "Student") {
+        return (
+            <div className={`bg-gray-900 height-screen text-white transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
+                <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                    <h1 className={`${!open && "hidden"} text-lg font-bold`}>Student</h1>
+                    <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
+                </div>
+                <ul className="mt-4">
+                    {studentMenuItems.map((item) => (
+                        <li
+                            key={item.name}
+                            onClick={() => { navigate(item.path); }}
+                            className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-700 ${active === item.name && "bg-gray-700"}`}
+                        >
+                            <item.icon size={20} />
+                            <span className={`${!open && "hidden"}`}>{item.name}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    } else if (active === "Teacher") {
+        return (
+            <div className={`bg-gray-900 text-white height-screen transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
+                <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                    <h1 className={`${!open && "hidden"} text-lg font-bold`}>Teacher</h1>
+                    <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
+                </div>
+                <ul className="mt-4">
+                    {teacherMenuItems.map((item) => (
+                        <li
+                            key={item.name}
+                            onClick={() => { navigate(item.path); }}
+                            className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-700 ${active === item.name && "bg-gray-700"}`}
+                        >
+                            <item.icon size={20} />
+                            <span className={`${!open && "hidden"}`}>{item.name}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
+};
 
-export default Sidebar
+export default Sidebar;

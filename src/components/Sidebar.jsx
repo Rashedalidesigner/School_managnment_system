@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Home, Users, BookOpen, ClipboardList, CheckSquare, Calendar, UserCheck, FileText, DollarSign, Menu } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const menuItems = [
     { name: "Students", path: "/admin/students", icon: Users },
@@ -36,9 +36,12 @@ const Sidebar = ({ open, setOpen, active }) => {
     console.log(open, active);
     if (active === "Admin") {
         return (
-            <div className={`bg-gray-900 text-white transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
+            <div className={`bg-gray-900 text-white transition-all duration-300 h-[100vh] fixed ${open ? "w-64" : "w-[20%]"}`}>
                 <div className="flex items-center justify-between p-4 border-b border-gray-700">
-                    <h1 className={`${!open && "hidden"} text-lg font-bold`}>Admin</h1>
+                    <NavLink to="/admin">
+                        <h1 className={`${!open && "hidden"} text-lg font-bold`}>Admin</h1>
+                    </NavLink>
+
                     <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
                 </div>
 
@@ -58,7 +61,7 @@ const Sidebar = ({ open, setOpen, active }) => {
         );
     } else if (active === "Student") {
         return (
-            <div className={`bg-gray-900 height-screen text-white transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
+            <div className={`bg-gray-900 fixed min-h-screen text-white transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
                 <div className="flex items-center justify-between p-4 border-b border-gray-700">
                     <h1 className={`${!open && "hidden"} text-lg font-bold`}>Student</h1>
                     <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />
@@ -79,7 +82,7 @@ const Sidebar = ({ open, setOpen, active }) => {
         );
     } else if (active === "Teacher") {
         return (
-            <div className={`bg-gray-900 text-white height-screen transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
+            <div className={`bg-gray-900 fixed text-white min-h-screen transition-all duration-300 ${open ? "w-64" : "w-20"}`}>
                 <div className="flex items-center justify-between p-4 border-b border-gray-700">
                     <h1 className={`${!open && "hidden"} text-lg font-bold`}>Teacher</h1>
                     <Menu className="cursor-pointer" onClick={() => setOpen(!open)} />

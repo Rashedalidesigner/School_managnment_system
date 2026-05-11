@@ -16,6 +16,9 @@ import UserPage from "./pages/admin/Userpage";
 import AssignmentmarkPage from "./pages/admin/Assignmentmark";
 import FeePage from "./pages/admin/Feepage";
 import TeacherPage from "./pages/admin/Teacherpage";
+import Dashboard from "./pages/admin/Dashbord.jsx";
+import { StudentAttendancePage } from "./pages/student/StudentDashboard.jsx";
+// import Dashboard from "./pages/admin/Dashbord";
 
 const App = () => {
   // useCallalldata();
@@ -32,6 +35,8 @@ const App = () => {
       /// Protected Routes
       <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
         <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="/admin" element={<Dashboard />} />
+          {/* <Route path="/" element={<Dashboard />} /> */}
           <Route path="students" element={<StudentPage />} />
           <Route path="teachers" element={<TeacherPage />} />
           <Route path="classes" element={<ClassroomPage />} />
@@ -47,7 +52,7 @@ const App = () => {
       </Route >
       <Route element={<ProtectedRoute allowedRoles={["Teacher"]} />}>
         <Route path="/teachers" element={<TeacherDashboard />}>
-          <Route path="students" element={<StudentPage />} />
+          <Route path="students" element={<StudentAttendancePage />} />
           <Route path="teachers" element={<TeacherPage />} />
           <Route path="assignments" element={<AssignmentPage />} />
           <Route path="student-attendance" element={<StudentattendencePage />} />
@@ -56,7 +61,7 @@ const App = () => {
         </Route>
       </Route >
       <Route element={<ProtectedRoute allowedRoles={["Student"]} />}>
-        <Route path="/students" element={<StudentDashboard />}>
+        <Route path="/students" element={<StudentAttendancePage />}>
           <Route path="classes" element={<ClassroomPage />} />
           <Route path="assignments" element={<AssignmentPage />} />
         </Route>

@@ -1,6 +1,7 @@
 import { Users, GraduationCap, DollarSign } from "lucide-react";
 
 const StatCard = ({ title, value, icon: Icon, color }) => {
+    console.log(title)
     return (
         <div className={`p-5 rounded-2xl shadow-md text-white ${color} hover:scale-105 transition`}>
 

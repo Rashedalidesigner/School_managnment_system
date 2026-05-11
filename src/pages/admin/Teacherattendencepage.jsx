@@ -80,7 +80,7 @@ const TeacherattendencePage = () => {
 
     return (
 
-        <div className="p-6 bg-gray-50 min-h-screen">
+        <div className="p-6 bg-gray-50 min-h-screen w-[85%] ml-[16%]">
 
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
@@ -127,7 +127,7 @@ const TeacherattendencePage = () => {
 
                     <tbody>
                         {data && data.map((item, index) => {
-                            return <tr key={index} className="border-b hover:bg-gray-50">
+                            return <tr key={index} className="border-b hover:bg-blue-200 bg-blue-50">
                                 <td className="p-3 font-medium">{item.TeacherId}</td>
                                 <td className="p-3">{item.date}</td>
                                 <td className="p-3">

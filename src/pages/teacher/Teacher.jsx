@@ -1,171 +1,258 @@
-// import Layout from "../../components/Layout";
+export default function TeacherDashboardPage() {
+    const sidebarItems = [
+        'Dashboard',
+        'My Classes',
+        'Students',
+        'Attendance',
+        'Assignments',
+        'Exams',
+        'Routine',
+        'Messages',
+        'Settings',
+    ];
 
-import { useState } from "react";
-import Sidebar from "../../components/Sidebar";
-
-export default function TeacherDashboard() {
-
-    const [active, setActive] = useState("Teacher");
-    const [open, setOpen] = useState(true);
-    const teachers = [
+    const stats = [
         {
-            id: 1,
-            name: 'Sophia Williams',
-            subject: 'Mathematics',
-            department: 'Science',
-            phone: '+1 202-555-0142',
-            status: 'Active',
+            title: 'Total Students',
+            value: '320',
+            icon: '👨‍🎓',
         },
         {
-            id: 2,
-            name: 'Daniel Brown',
-            subject: 'Physics',
-            department: 'Science',
-            phone: '+1 202-555-0185',
-            status: 'On Leave',
+            title: 'Classes Taken',
+            value: '24',
+            icon: '🏫',
         },
         {
-            id: 3,
-            name: 'Olivia Taylor',
-            subject: 'English',
-            department: 'Arts',
-            phone: '+1 202-555-0177',
-            status: 'Active',
+            title: 'Assignments',
+            value: '18',
+            icon: '📚',
         },
         {
-            id: 4,
-            name: 'James Wilson',
-            subject: 'Computer Science',
-            department: 'Technology',
-            phone: '+1 202-555-0199',
-            status: 'Active',
+            title: 'Attendance',
+            value: '96%',
+            icon: '📈',
         },
     ];
 
-    return <>
-        <div className="container w-full relative">
-            <Sidebar open={open} setActive={setActive} setOpen={setOpen} active={active} />
-            <div className="min-h-screen bg-slate-100 p-6 w-[84%] ml-[16%]">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
+    const students = [
+        {
+            name: 'Emma Watson',
+            class: 'Class 10',
+            status: 'Present',
+        },
+        {
+            name: 'Michael Brown',
+            class: 'Class 9',
+            status: 'Present',
+        },
+        {
+            name: 'Sophia Lee',
+            class: 'Class 8',
+            status: 'Absent',
+        },
+        {
+            name: 'John Smith',
+            class: 'Class 7',
+            status: 'Present',
+        },
+    ];
+
+    return (
+        <div className="flex bg-slate-950 min-h-screen text-white">
+            {/* Sidebar */}
+            <div className="w-[280px] h-screen bg-slate-900 border-r border-slate-800 flex flex-col fixed left-0 top-0">
+                {/* Logo */}
+                <div className="px-6 py-6 border-b border-slate-800">
+                    <h1 className="text-2xl font-bold tracking-wide">
+                        School<span className="text-cyan-400">MS</span>
+                    </h1>
+
+                    <p className="text-slate-400 text-sm mt-1">Teacher Panel</p>
+                </div>
+
+                {/* Teacher Info */}
+                <div className="flex items-center gap-4 px-6 py-5 border-b border-slate-800">
+                    <img
+                        src="https://i.pravatar.cc/100"
+                        alt="teacher"
+                        className="w-14 h-14 rounded-full border-2 border-cyan-400 object-cover"
+                    />
+
                     <div>
-                        <h1 className="text-4xl font-bold text-slate-800">
-                            Teacher Management
+                        <h2 className="font-semibold text-lg">John Doe</h2>
+                        <p className="text-sm text-slate-400">Math Teacher</p>
+                    </div>
+                </div>
+
+                {/* Menu */}
+                <div className="flex-1 px-4 py-5 space-y-2 overflow-y-auto">
+                    {sidebarItems.map((item, index) => (
+                        <button
+                            key={index}
+                            className={`w-full text-left px-4 py-3 rounded-2xl transition-all duration-200 font-medium ${index === 0
+                                    ? 'bg-cyan-500 text-white shadow-lg'
+                                    : 'text-slate-300 hover:bg-cyan-500 hover:text-white'
+                                }`}
+                        >
+                            {item}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Logout */}
+                <div className="p-4 border-t border-slate-800">
+                    <button className="w-full bg-red-500 hover:bg-red-600 transition-all duration-200 py-3 rounded-2xl font-semibold">
+                        Logout
+                    </button>
+                </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="ml-[280px] flex-1 p-6">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold">
+                            Teacher <span className="text-cyan-400">Dashboard</span>
                         </h1>
-                        <p className="text-slate-500 mt-2">
-                            Manage teachers, departments, and academic staff information.
+
+                        <p className="text-slate-400 mt-1">
+                            Welcome back, John 👋
                         </p>
                     </div>
 
-                    <div className="flex gap-3">
-                        <input
-                            type="text"
-                            placeholder="Search teacher..."
-                            className="px-4 py-3 rounded-2xl border border-slate-200 bg-white outline-none shadow-sm"
-                        />
-
-                        <button className="bg-blue-600 hover:bg-blue-700 transition text-white px-5 py-3 rounded-2xl shadow-lg">
-                            + Add Teacher
-                        </button>
-                    </div>
+                    <button className="bg-cyan-500 hover:bg-cyan-600 transition-all duration-200 px-5 py-3 rounded-2xl font-semibold shadow-lg">
+                        + Create Assignment
+                    </button>
                 </div>
 
+                {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                        <p className="text-slate-500 text-sm">Total Teachers</p>
-                        <h2 className="text-4xl font-bold text-slate-800 mt-3">148</h2>
-                        <p className="text-green-500 text-sm mt-2">+8 this month</p>
+                    {stats.map((item, index) => (
+                        <div
+                            key={index}
+                            className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl hover:border-cyan-500 transition-all duration-300"
+                        >
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-slate-400 text-sm">{item.title}</p>
+                                    <h2 className="text-3xl font-bold mt-2">{item.value}</h2>
+                                </div>
+
+                                <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 flex items-center justify-center text-3xl border border-cyan-500/30">
+                                    {item.icon}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Content Grid */}
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    {/* Attendance Chart */}
+                    <div className="xl:col-span-2 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                        <div className="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 className="text-xl font-bold">Weekly Attendance</h2>
+                                <p className="text-slate-400 text-sm mt-1">
+                                    Student attendance performance
+                                </p>
+                            </div>
+
+                            <button className="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm">
+                                This Week
+                            </button>
+                        </div>
+
+                        <div className="h-[300px] flex items-end justify-between gap-4 pt-10">
+                            {[75, 90, 85, 100, 95, 88, 78].map((height, index) => (
+                                <div
+                                    key={index}
+                                    className="flex-1 bg-cyan-500 rounded-t-3xl hover:bg-cyan-400 transition-all duration-200"
+                                    style={{ height: `${height}%` }}
+                                ></div>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                        <p className="text-slate-500 text-sm">Departments</p>
-                        <h2 className="text-4xl font-bold text-blue-600 mt-3">12</h2>
-                        <p className="text-blue-500 text-sm mt-2">Academic divisions</p>
-                    </div>
+                    {/* Notifications */}
+                    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-xl font-bold">Notifications</h2>
 
-                    <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                        <p className="text-slate-500 text-sm">Active Staff</p>
-                        <h2 className="text-4xl font-bold text-green-600 mt-3">139</h2>
-                        <p className="text-green-500 text-sm mt-2">Currently available</p>
-                    </div>
+                            <span className="bg-cyan-500 text-white text-xs px-3 py-1 rounded-full">
+                                3 New
+                            </span>
+                        </div>
 
-                    <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                        <p className="text-slate-500 text-sm">On Leave</p>
-                        <h2 className="text-4xl font-bold text-yellow-500 mt-3">9</h2>
-                        <p className="text-yellow-500 text-sm mt-2">Temporary leave</p>
+                        <div className="space-y-4">
+                            <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
+                                <p className="font-medium">New assignment submitted</p>
+                                <span className="text-sm text-slate-400">10 mins ago</span>
+                            </div>
+
+                            <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
+                                <p className="font-medium">Meeting at 2 PM</p>
+                                <span className="text-sm text-slate-400">30 mins ago</span>
+                            </div>
+
+                            <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
+                                <p className="font-medium">Exam schedule published</p>
+                                <span className="text-sm text-slate-400">1 hour ago</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 overflow-x-auto">
+                {/* Student Table */}
+                <div className="mt-8 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl overflow-x-auto">
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h2 className="text-2xl font-bold text-slate-800">
-                                Teacher Directory
-                            </h2>
-                            <p className="text-slate-500 text-sm mt-1">
-                                Complete teacher and faculty information.
+                            <h2 className="text-xl font-bold">Today's Students</h2>
+                            <p className="text-slate-400 text-sm mt-1">
+                                Student attendance list
                             </p>
                         </div>
 
-                        <button className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
-                            Export List
+                        <button className="bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-xl text-sm font-medium">
+                            View All
                         </button>
                     </div>
 
-                    <table className="w-full min-w-[900px]">
+                    <table className="w-full min-w-[600px]">
                         <thead>
-                            <tr className="border-b border-slate-100 text-left text-slate-500">
-                                <th className="pb-4">Teacher Name</th>
-                                <th className="pb-4">Subject</th>
-                                <th className="pb-4">Department</th>
-                                <th className="pb-4">Phone</th>
+                            <tr className="border-b border-slate-800 text-left text-slate-400">
+                                <th className="pb-4">Student Name</th>
+                                <th className="pb-4">Class</th>
                                 <th className="pb-4">Status</th>
                                 <th className="pb-4">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {teachers.map((teacher) => (
+                            {students.map((student, index) => (
                                 <tr
-                                    key={teacher.id}
-                                    className="border-b border-slate-50 hover:bg-slate-50 transition"
+                                    key={index}
+                                    className="border-b border-slate-800 hover:bg-slate-800/40 transition-all duration-200"
                                 >
-                                    <td className="py-5 font-semibold text-slate-700">
-                                        {teacher.name}
-                                    </td>
-
-                                    <td className="py-5 text-slate-600">
-                                        {teacher.subject}
-                                    </td>
-
-                                    <td className="py-5 text-slate-600">
-                                        {teacher.department}
-                                    </td>
-
-                                    <td className="py-5 text-slate-600">
-                                        {teacher.phone}
-                                    </td>
+                                    <td className="py-5 font-medium">{student.name}</td>
+                                    <td className="py-5 text-slate-300">{student.class}</td>
 
                                     <td className="py-5">
                                         <span
-                                            className={`px-4 py-2 rounded-full text-xs font-semibold ${teacher.status === 'Active'
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-yellow-100 text-yellow-700'
+                                            className={`px-3 py-1 rounded-full text-sm border ${student.status === 'Present'
+                                                    ? 'bg-green-500/20 text-green-400 border-green-500/20'
+                                                    : 'bg-red-500/20 text-red-400 border-red-500/20'
                                                 }`}
                                         >
-                                            {teacher.status}
+                                            {student.status}
                                         </span>
                                     </td>
 
                                     <td className="py-5">
-                                        <div className="flex gap-2">
-                                            <button className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-sm font-medium">
-                                                View
-                                            </button>
-
-                                            <button className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white text-sm font-medium">
-                                                Edit
-                                            </button>
-                                        </div>
+                                        <button className="bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200">
+                                            Details
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -174,9 +261,5 @@ export default function TeacherDashboard() {
                 </div>
             </div>
         </div>
-    </>
-}
-
-export function TeacherManagementPage() {
-
+    );
 }
